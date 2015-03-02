@@ -1,52 +1,49 @@
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.geom.Rectangle2D;
+import java.util.*;
+
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 
-public class gui extends Canvas {
-    
-	public gui()
+public class gui
+{
+    public static void main (String[]args)
+    {
+        frame frame = new frame();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
+    }
+}
+class frame extends JFrame
+{
+    public frame()
 	{
-		keyHandler listener = new keyHandler();
-		addKeyListener(listener);
-		setFocusable(true);
+        setTitle("HELLO");
+        setSize(250,350);
+        panel panel = new panel();
+        add(panel);
 	}
-	
-	public static void main(String[] args)
+}
+class panel
+{
+    public panel()
+    {
+        KeyHandler key = new KeyHandler();
+        addMouseListener(key);
+        setFocusable(true);
+    }
+	public void paintComponent(Graphics g)
 	{
-		JFrame frame = new JFrame();
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		Canvas canvas = new gui();
-		canvas.setSize(400, 420);
-		
-		frame.getContentPane().add(canvas);
-		
-		frame.pack();
-		frame.setVisible(true);
-		
-		
-		
+        Graphics2D g2 = (Graphics2D) g;
 	}
-	
-	public void paint (Graphics g) 
-	{
-		
-		Graphics2D g2 = (Graphics2D) g;
-		
-		
-		
-		
-	}
-	
-	
 	public void arrowKey(String string, Graphics g)
 	{
-		Graphics2D g2 = (Graphics2D) g;	
-		
-		//Testing if keyboard works: System.out.println(string.toLowerCase());
-		
+				
 		if(string.equals("RIGHT"))
 		{
 			
@@ -67,42 +64,33 @@ public class gui extends Canvas {
 		repaint();
 		
 	}
-	public class keyHandler implements KeyListener
-	{
-		@Override
-		public void keyPressed(KeyEvent e) {
-			// TODO Auto-generated method stub
-			
-			
-			if (e.getKeyCode() == KeyEvent.VK_RIGHT ) {
-	            arrowKey("RIGHT", (Graphics)e.getComponent().getGraphics());
-	        } 
-	        else if (e.getKeyCode() == KeyEvent.VK_LEFT ) {
-	        	arrowKey("LEFT", (Graphics)e.getComponent().getGraphics());
-	        } 
-	        else if (e.getKeyCode() == KeyEvent.VK_UP ) {
-	        	arrowKey("UP", (Graphics)e.getComponent().getGraphics());
-	        } 
-	        else if (e.getKeyCode() == KeyEvent.VK_DOWN ) {
-	        	arrowKey("DOWN", (Graphics)e.getComponent().getGraphics());
-	        }
-	        else
-	        	arrowKey("ELSE", (Graphics)e.getComponent().getGraphics());
-			}
-
-		@Override
-		public void keyReleased(KeyEvent arg0) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void keyTyped(KeyEvent arg0) {
-			// TODO Auto-generated method stub
-			
-		}	
-		
-	
-	}
-		
+    private class KeyHandler implements KeyListener
+    {
+        public void keyTyped(KeyEvent e) {}
+        public void keyPressed(KeyEvent e)
+        {
+            int keycode = e.getKeyCode();
+            if (keycode == KeyEvent.VK_LEFT)
+            {
+                arrowkey("LEFT", (Graphics2D)e.getComponent().getGraphics());
+            }
+            if (keycode == KeyEvent.VK_RIGHT)
+            {
+                arrowkey("RIGHT", (Graphics2D)e.getComponent().getGraphics());
+            }
+            if (keycode == KeyEvent.VK_DOWN)
+            {
+                arrowkey("DOWN", (Graphics2D)e.getComponent().getGraphics());
+            }
+            if (keycode == KeyEvent.VK_UP)
+            {
+                arrowkey("UP", (Graphics2D)e.getComponent().getGraphics());
+            }
+            if (keycode == KeyEvent.VK_ESCAPE)
+            {
+                System.exit(0);
+            }
+        }
+        public void keyReleased(KeyEvent e) {}		
+    }
 }
