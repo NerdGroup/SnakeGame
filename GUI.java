@@ -4,8 +4,8 @@ import java.awt.event.KeyListener;
 import javax.swing.JFrame;
 
 
-public class gui extends Canvas {
-    
+public class gui extends Canvas 
+{
 	public gui()
 	{
 		keyHandler listener = new keyHandler();
@@ -60,39 +60,34 @@ public class gui extends Canvas {
 	public class keyHandler implements KeyListener
 	{
 		@Override
-		public void keyPressed(KeyEvent e) {
-			// TODO Auto-generated method stub
-			
-			
-			if (e.getKeyCode() == KeyEvent.VK_RIGHT ) {
-	            arrowKey("RIGHT", (Graphics)e.getComponent().getGraphics());
-	        } 
-	        else if (e.getKeyCode() == KeyEvent.VK_LEFT ) {
-	        	arrowKey("LEFT", (Graphics)e.getComponent().getGraphics());
-	        } 
-	        else if (e.getKeyCode() == KeyEvent.VK_UP ) {
-	        	arrowKey("UP", (Graphics)e.getComponent().getGraphics());
-	        } 
-	        else if (e.getKeyCode() == KeyEvent.VK_DOWN ) {
-	        	arrowKey("DOWN", (Graphics)e.getComponent().getGraphics());
-	        }
-	        else
-	        	arrowKey("ELSE", (Graphics)e.getComponent().getGraphics());
+		public void keyPressed(KeyEvent e)
+		{
+			if (e.getKeyCode() == KeyEvent.VK_RIGHT ) 
+			{
+	            		arrowKey("RIGHT", (Graphics)e.getComponent().getGraphics());
 			}
-
-		@Override
-		public void keyReleased(KeyEvent arg0) {
-			// TODO Auto-generated method stub
-			
+	        
+	        	else if (e.getKeyCode() == KeyEvent.VK_LEFT ) 
+	        	{
+	        		arrowKey("LEFT", (Graphics)e.getComponent().getGraphics());
+	        	}
+	        	else if (e.getKeyCode() == KeyEvent.VK_UP ) 
+	        	{
+	        		arrowKey("UP", (Graphics)e.getComponent().getGraphics());
+	        	}
+	         
+	        	else if (e.getKeyCode() == KeyEvent.VK_DOWN ) 
+	        	{
+	        		arrowKey("DOWN", (Graphics)e.getComponent().getGraphics());
+	        	}
+	        	else
+	        		arrowKey("ELSE", (Graphics)e.getComponent().getGraphics());
 		}
 
 		@Override
-		public void keyTyped(KeyEvent arg0) {
-			// TODO Auto-generated method stub
-			
-		}	
-		
-	
+		public void keyReleased(KeyEvent arg0) {}
+		@Override
+		public void keyTyped(KeyEvent arg0) {}	
 	}
 		
 }
