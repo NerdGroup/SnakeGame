@@ -81,7 +81,9 @@ public class gui extends Canvas
 	        		arrowKey("DOWN", (Graphics)e.getComponent().getGraphics());
 	        	}
 	        	else
+	        	{
 	        		arrowKey("ELSE", (Graphics)e.getComponent().getGraphics());
+	        	}
 		}
 
 		@Override
