@@ -9,6 +9,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import java.util.timer;
+
 
 public class gui
 {
@@ -29,7 +31,7 @@ class frame extends JFrame
         add(panel);
 	}
 }
-class panel
+class panel extends JPanel
 {
     public panel()
     {
