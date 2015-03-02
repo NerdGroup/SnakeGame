@@ -1,12 +1,15 @@
+package snake;
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+
 import javax.swing.JFrame;
+import javax.swing.Timer;
 
-
-public class gui extends Canvas 
+public class GUI extends Canvas 
 {
-	public gui()
+	public GUI()
 	{
 		keyHandler listener = new keyHandler();
 		addKeyListener(listener);
@@ -15,16 +18,18 @@ public class gui extends Canvas
 	
 	public static void main(String[] args)
 	{
-  	JFrame frame = new JFrame();
-  	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		JFrame frame = new JFrame();
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		Canvas canvas = new gui();
+		Canvas canvas = new GUI();
 		canvas.setSize(400, 420);
 		
 		frame.getContentPane().add(canvas);
 		
 		frame.pack();
 		frame.setVisible(true);
+		
+		
 	}
 	
 	public void paint (Graphics g) 
@@ -64,32 +69,35 @@ public class gui extends Canvas
 		{
 			if (e.getKeyCode() == KeyEvent.VK_RIGHT ) 
 			{
-	            		arrowKey("RIGHT", (Graphics)e.getComponent().getGraphics());
+	            arrowKey("RIGHT", (Graphics)e.getComponent().getGraphics());
 			}
 	        
-	        	else if (e.getKeyCode() == KeyEvent.VK_LEFT ) 
-	        	{
-	        		arrowKey("LEFT", (Graphics)e.getComponent().getGraphics());
-	        	}
-	        	else if (e.getKeyCode() == KeyEvent.VK_UP ) 
-	        	{
-	        		arrowKey("UP", (Graphics)e.getComponent().getGraphics());
-	        	}
-	         
-	        	else if (e.getKeyCode() == KeyEvent.VK_DOWN ) 
-	        	{
-	        		arrowKey("DOWN", (Graphics)e.getComponent().getGraphics());
-	        	}
-	        	else
-	        	{
-	        		arrowKey("ELSE", (Graphics)e.getComponent().getGraphics());
-	        	}
+	        else if (e.getKeyCode() == KeyEvent.VK_LEFT ) 
+	        {
+	        	arrowKey("LEFT", (Graphics)e.getComponent().getGraphics());
+	        }
+	        else if (e.getKeyCode() == KeyEvent.VK_UP ) 
+	        {
+	        	arrowKey("UP", (Graphics)e.getComponent().getGraphics());
+	        }
+	        
+	        else if (e.getKeyCode() == KeyEvent.VK_DOWN ) 
+	        {
+	        	arrowKey("DOWN", (Graphics)e.getComponent().getGraphics());
+	        }
+	        else
+	        {
+	        	arrowKey("ELSE", (Graphics)e.getComponent().getGraphics());
+	        }
 		}
-
+		
 		@Override
-		public void keyReleased(KeyEvent arg0) {}
+		public void keyReleased(KeyEvent arg0) 
+		{}
+		
 		@Override
-		public void keyTyped(KeyEvent arg0) {}	
+		public void keyTyped(KeyEvent arg0) 
+		{}	
 	}
 		
 }
