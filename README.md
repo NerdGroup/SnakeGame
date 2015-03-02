@@ -1,4 +1,4 @@
 # SnakeGame
-A Game Made By <br/>
-Rahul Krishnan 
-Saketram Durbha
+# A Game Made 
+# Rahul Krishnan 
+# Saketram Durbha
