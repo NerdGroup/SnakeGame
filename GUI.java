@@ -10,8 +10,8 @@ import java.util.*;
 public class GUI extends Canvas
 {
     Random rand = new Random();
-        static int length = 30;
-    static int snakeSize = 15;
+        static final int length = 30;
+    	static final int snakeSize = 15;
 	static Rectangle2D head = new Rectangle2D.Double(60, 60, snakeSize, snakeSize);
 	static boolean onScreen[] = new boolean[900];
 	static Rectangle2D snake[] = new Rectangle2D[900];
