@@ -10,18 +10,17 @@ import java.util.*;
 public class GUI extends Canvas 
 {
     Random rand = new Random();
-    int[] places = new int[29]
+    int[] places = new int[29]; //why 29?
 
 	
 	
 	public GUI()
 	{
-        Random rand = new Random();
-        int[] places = new int[29]
-        for (int i = 15, l=0; i < 450; i+= 15, l++)
-        {
-            places[l] = i;
-        }// if "grid starts at (15, 15) and ends at (435, 435)
+        	int[] places = new int[29]
+        	for (int i = 15, l=0; i < 450; i+= 15, l++)
+        	{
+        	    places[l] = i;
+        	}// if "grid starts at (15, 15) and ends at (435, 435)
 		keyHandler listener = new keyHandler();
 		addKeyListener(listener);
 		setFocusable(true);
@@ -47,14 +46,8 @@ public class GUI extends Canvas
 		frame.pack();
 		frame.setVisible(true);
 		
-		gameLoop();
 	}
 	
-	static void gameLoop() 
-	{
-		
-		
-	}
 
 	public void paint (Graphics g) 
 	{
@@ -71,7 +64,7 @@ public class GUI extends Canvas
 
 		if(string.equals("RIGHT"))
 		{
-            if (player.)
+            		
 		}
 		else if(string.equals("LEFT"))
 		{
@@ -96,26 +89,24 @@ public class GUI extends Canvas
 		{
 			if (e.getKeyCode() == KeyEvent.VK_RIGHT ) 
 			{
-	            arrowKey("RIGHT", (Graphics)e.getComponent().getGraphics());
+	        		arrowKey("RIGHT", (Graphics)e.getComponent().getGraphics());
 			}
-	        
-	        else if (e.getKeyCode() == KeyEvent.VK_LEFT ) 
-	        {
-	        	arrowKey("LEFT", (Graphics)e.getComponent().getGraphics());
-	        }
-	        else if (e.getKeyCode() == KeyEvent.VK_UP ) 
-	        {
-	        	arrowKey("UP", (Graphics)e.getComponent().getGraphics());
-	        }
-	        
-	        else if (e.getKeyCode() == KeyEvent.VK_DOWN ) 
-	        {
-	        	arrowKey("DOWN", (Graphics)e.getComponent().getGraphics());
-	        }
-	        else
-	        {
-	        	arrowKey("ELSE", (Graphics)e.getComponent().getGraphics());
-	        }
+	        	else if (e.getKeyCode() == KeyEvent.VK_LEFT ) 
+	        	{
+	        		arrowKey("LEFT", (Graphics)e.getComponent().getGraphics());
+	        	}
+	        	else if (e.getKeyCode() == KeyEvent.VK_UP ) 
+	        	{
+	        		arrowKey("UP", (Graphics)e.getComponent().getGraphics());
+	        	}
+			else if (e.getKeyCode() == KeyEvent.VK_DOWN ) 
+	        	{
+	        		arrowKey("DOWN", (Graphics)e.getComponent().getGraphics());
+	        	}
+	        	/*else
+	        	{
+	        		arrowKey("ELSE", (Graphics)e.getComponent().getGraphics());
+	        	}*/
 		}
 		
 		@Override
