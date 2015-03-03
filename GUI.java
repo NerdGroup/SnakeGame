@@ -7,7 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.Timer;
 import java.util.*;
 
-public class GUI extends Canvas 
+public class GUI extends Canvas
 {
     Random rand = new Random();
         static int length = 30;
@@ -30,7 +30,6 @@ public class GUI extends Canvas
 		snake[0] = head;
 		onScreen[0] = true;
 	}
-
 	
 	public static void main(String[] args)
 	{		
@@ -50,7 +49,9 @@ public class GUI extends Canvas
 		frame.pack();
 		frame.setVisible(true);
 		
+		
 	}
+	
 	
 
 	public void paint (Graphics g) 
@@ -127,5 +128,6 @@ public class GUI extends Canvas
 		public void keyTyped(KeyEvent arg0) 
 		{}	
 	}
+	
 		
 }
