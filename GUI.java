@@ -10,37 +10,43 @@ import java.util.*;
 public class GUI extends Canvas 
 {
     Random rand = new Random();
+        static int length = 30;
+    static int snakeSize = 15;
+	static Rectangle2D head = new Rectangle2D.Double(60, 60, snakeSize, snakeSize);
+	static boolean onScreen[] = new boolean[900];
+	static Rectangle2D snake[] = new Rectangle2D[900];
 
-	
-	
 	public GUI()
 	{
-        	for (int i = 15, l=0; i < 450; i+= 15, l++)
-        	{
-        	    places[l] = i;
-        	}// if grid starts at (15, 15) and ends at (435, 435)
+       // if grid starts at (15, 15) and ends at (435, 435)
 		keyHandler listener = new keyHandler();
 		addKeyListener(listener);
 		setFocusable(true);
-	}
-	//Note: we can't do it at a random coordinate unless we specify a random coordinate in the top left quarter (don't want player starting going off the screen right at the start)
-	static Rectangle2D head = new Rectangle2D.Double(places[rand.nextInt(30)], places[rand.nextInt(30)], 15, 15);
-	static boolean onScreen[] = new boolean[900];
-	static Rectangle2D snake[] = new Rectangle2D[900];
-	
-	public static void main(String[] args)
-	{
+		
+		for(int i = 0; i < onScreen.length; i++)
+		{
+			
+		}	
 		snake[0] = head;
 		onScreen[0] = true;
-		
+	}
+
+	
+	public static void main(String[] args)
+	{		
 		JFrame frame = new JFrame("Snake!!!");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		Canvas canvas = new GUI();
-		canvas.setSize(450, 450);
+		canvas.setSize(length * snakeSize, length * snakeSize);
 		
+		frame.setPreferredSize(new Dimension(length*snakeSize, length*snakeSize));
+		frame.setMaximumSize(new Dimension(length*snakeSize, length*snakeSize));
+		frame.setMinimumSize(new Dimension(length*snakeSize, length*snakeSize));
+		frame.setResizable(false);
+		
+		frame.setSize(length*snakeSize, length*snakeSize);
 		frame.getContentPane().add(canvas);
-		
 		frame.pack();
 		frame.setVisible(true);
 		
@@ -51,8 +57,14 @@ public class GUI extends Canvas
 	{
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setColor(Color.GREEN);
-		g2.draw(head);
 		g2.fill(head);
+		
+		g2.setColor(Color.BLACK);
+		for(int i = 0; i < length; i++)
+		{
+			g.drawLine(snakeSize * i, 0, snakeSize * i, length*snakeSize);
+			g.drawLine(0, snakeSize * i, length*snakeSize, snakeSize * i);
+		}
 	}
 	
 	
