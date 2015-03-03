@@ -21,7 +21,7 @@ public class GUI extends Canvas
         for (int i = 15, l=0; i < 450; i+= 15, l++)
         {
             places[l] = i;
-        }// if "grid starts at (15, 15) and ends at
+        }// if "grid starts at (15, 15) and ends at (435, 435)
 		keyHandler listener = new keyHandler();
 		addKeyListener(listener);
 		setFocusable(true);
