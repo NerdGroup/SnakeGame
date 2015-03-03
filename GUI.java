@@ -11,15 +11,13 @@ public class GUI extends Canvas
 {
     Random rand = new Random();
     int[] places = new int[29]
-    static Rectangle2D head = new Rectangle2D.Double(45, 45, 15, 15);
-    static Rectangle2D head = new Rectangle2D.Double(45, 45, 15, 15);
-	static boolean onScreen[] = new boolean[900];
-	static Rectangle2D snake[] = new Rectangle2D[900];
-    int[] places = new int[29]
+
 	
 	
 	public GUI()
 	{
+        Random rand = new Random();
+        int[] places = new int[29]
         for (int i = 15, l=0; i < 450; i+= 15, l++)
         {
             places[l] = i;
@@ -30,7 +28,6 @@ public class GUI extends Canvas
 	}
 
     static Rectangle2D head = new Rectangle2D.Double(places[rand.nextInt(30)], places[rand.nextInt(30)], 15, 15);
-    static Rectangle2D head = new Rectangle2D.Double(45, 45, 15, 15);
     static boolean onScreen[] = new boolean[900];
     static Rectangle2D snake[] = new Rectangle2D[900];
 	
