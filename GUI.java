@@ -10,13 +10,11 @@ import java.util.*;
 public class GUI extends Canvas 
 {
     Random rand = new Random();
-    int[] places = new int[29]; //why 29? what is this array for?
 
 	
 	
 	public GUI()
 	{
-        	int[] places = new int[29]; //why again???
         	for (int i = 15, l=0; i < 450; i+= 15, l++)
         	{
         	    places[l] = i;
