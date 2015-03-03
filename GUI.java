@@ -13,8 +13,8 @@ public class GUI extends Canvas
         static final int length = 30;
     	static final int snakeSize = 15;
 	static Rectangle2D head = new Rectangle2D.Double(60, 60, snakeSize, snakeSize);
-	static boolean onScreen[] = new boolean[900];
-	static Rectangle2D snake[] = new Rectangle2D[900];
+	static boolean onScreen[] = new boolean[length * length];
+	static Rectangle2D snake[] = new Rectangle2D[length * length];
 
 	public GUI()
 	{
@@ -25,7 +25,7 @@ public class GUI extends Canvas
 		
 		for(int i = 0; i < onScreen.length; i++)
 		{
-			
+			onScreen[i] = false;
 		}	
 		snake[0] = head;
 		onScreen[0] = true;
