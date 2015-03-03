@@ -7,14 +7,17 @@ import javax.swing.JFrame;
 import javax.swing.Timer;
 import java.util.*;
 
-public class GUI extends Canvas
+public class GUI extends Canvas implements Runnable
 {
-    Random rand = new Random();
+	static String direction = "DOWN";
+	static boolean gameEnd = false;
+    	Random rand = new Random();
         static final int length = 30;
     	static final int snakeSize = 15;
 	static Rectangle2D head = new Rectangle2D.Double(60, 60, snakeSize, snakeSize);
 	static boolean onScreen[] = new boolean[length * length];
 	static Rectangle2D snake[] = new Rectangle2D[length * length];
+	private Thread t;
 
 	public GUI()
 	{
@@ -26,9 +29,36 @@ public class GUI extends Canvas
 		for(int i = 0; i < onScreen.length; i++)
 		{
 			onScreen[i] = false;
-		}	
+		}
 		snake[0] = head;
 		onScreen[0] = true;
+	}
+	
+	public void run()
+	{
+		while(!gameEnd)	
+		{
+			try
+			{
+				arrowKey(direction, (Graphics)e.getComponent().getGraphics());
+				Thread.sleep(500);	
+			}
+			catch (InterruptedException e)
+			{
+				System.out.println("Interrupted");
+			}
+		}
+		
+		System.out.println("Game Over!!!");
+	}
+	
+	public void start()
+	{
+		if (t == null)
+      		{
+        		t = new Thread (this, threadName);
+         		t.start ();
+      		}
 	}
 	
 	public static void main(String[] args)
@@ -49,7 +79,7 @@ public class GUI extends Canvas
 		frame.pack();
 		frame.setVisible(true);
 		
-		
+		start();
 	}
 	
 	
@@ -75,19 +105,19 @@ public class GUI extends Canvas
 
 		if(string.equals("RIGHT"))
 		{
-            		
+            		head.setFrame(head.getX() + snakeSize, head.getY(), snakeSize, snakeSize);	
 		}
 		else if(string.equals("LEFT"))
 		{
-			
+			head.setFrame(head.getX() - snakeSize, head.getY(), snakeSize, snakeSize);
 		}
 		else if(string.equals("UP"))
 		{
-			
+			head.setFrame(head.getX(), head.getY() + snakeSize, snakeSize, snakeSize);
 		}
 		else if(string.equals("DOWN"))
 		{
-			
+			head.setFrame(head.getX(), head.getY() - snakeSize, snakeSize, snakeSize);
 		}
 		
 		repaint();
@@ -100,19 +130,19 @@ public class GUI extends Canvas
 		{
 			if (e.getKeyCode() == KeyEvent.VK_RIGHT ) 
 			{
-	        		arrowKey("RIGHT", (Graphics)e.getComponent().getGraphics());
+	        		direction = "RIGHT";
 			}
 	        	else if (e.getKeyCode() == KeyEvent.VK_LEFT ) 
 	        	{
-	        		arrowKey("LEFT", (Graphics)e.getComponent().getGraphics());
+	        		direction = "LEFT";
 	        	}
 	        	else if (e.getKeyCode() == KeyEvent.VK_UP ) 
 	        	{
-	        		arrowKey("UP", (Graphics)e.getComponent().getGraphics());
+	        		direction = "UP";
 	        	}
 			else if (e.getKeyCode() == KeyEvent.VK_DOWN ) 
 	        	{
-	        		arrowKey("DOWN", (Graphics)e.getComponent().getGraphics());
+	        		direction = "DOWN";
 	        	}
 	        	/*else
 	        	{
