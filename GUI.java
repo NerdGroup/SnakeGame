@@ -1,14 +1,20 @@
 package snake;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-
+import java.awt.event.*;
+import java.awt.geom.*;
 import javax.swing.JFrame;
 import javax.swing.Timer;
+import java.util.*;
 
 public class GUI extends Canvas 
 {
+	static Rectangle2D head = new Rectangle2D.Double(45, 45, 15, 15);
+	static boolean onScreen[] = new boolean[900];
+	static Rectangle2D snake[] = new Rectangle2D[900];
+	
+	
+	
 	public GUI()
 	{
 		keyHandler listener = new keyHandler();
@@ -18,23 +24,35 @@ public class GUI extends Canvas
 	
 	public static void main(String[] args)
 	{
+		snake[0] = head;
+		onScreen[0] = true;
+		
 		JFrame frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		Canvas canvas = new GUI();
-		canvas.setSize(400, 420);
+		canvas.setSize(450, 450);
 		
 		frame.getContentPane().add(canvas);
 		
 		frame.pack();
 		frame.setVisible(true);
 		
-		
+		gameLoop();
 	}
 	
+	static void gameLoop() 
+	{
+		
+		
+	}
+
 	public void paint (Graphics g) 
 	{
 		Graphics2D g2 = (Graphics2D) g;
+		g2.setColor(Color.GREEN);
+		g2.draw(head);
+		g2.fill(head);
 	}
 	
 	
