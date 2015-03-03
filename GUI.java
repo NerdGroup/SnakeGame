@@ -9,18 +9,30 @@ import java.util.*;
 
 public class GUI extends Canvas 
 {
-	static Rectangle2D head = new Rectangle2D.Double(45, 45, 15, 15);
+    Random rand = new Random();
+    int[] places = new int[29]
+    static Rectangle2D head = new Rectangle2D.Double(45, 45, 15, 15);
+    static Rectangle2D head = new Rectangle2D.Double(45, 45, 15, 15);
 	static boolean onScreen[] = new boolean[900];
 	static Rectangle2D snake[] = new Rectangle2D[900];
-	
+    int[] places = new int[29]
 	
 	
 	public GUI()
 	{
+        for (int i = 15, l=0; i < 450; i+= 15, l++)
+        {
+            places[l] = i;
+        }// if "grid starts at (15, 15) and ends at
 		keyHandler listener = new keyHandler();
 		addKeyListener(listener);
 		setFocusable(true);
 	}
+
+    static Rectangle2D head = new Rectangle2D.Double(places[rand.nextInt(30)], places[rand.nextInt(30)], 15, 15);
+    static Rectangle2D head = new Rectangle2D.Double(45, 45, 15, 15);
+    static boolean onScreen[] = new boolean[900];
+    static Rectangle2D snake[] = new Rectangle2D[900];
 	
 	public static void main(String[] args)
 	{
@@ -62,7 +74,7 @@ public class GUI extends Canvas
 
 		if(string.equals("RIGHT"))
 		{
-			
+            if (player.)
 		}
 		else if(string.equals("LEFT"))
 		{
