@@ -1,7 +1,10 @@
+package snake;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
 import javax.swing.JFrame;
+import javax.swing.Timer;
 import java.util.*;
 
 public class GUI extends Canvas
@@ -10,52 +13,13 @@ public class GUI extends Canvas
     
     static String direction = "DOWN";
     static boolean gameEnd = false;
-    static Random rand = new Random();
+    Random rand = new Random();
     static final int length = 30;
     static final int snakeSize = 15;
     static Rectangle2D head = new Rectangle2D.Double(60, 60, snakeSize, snakeSize);
-    static Rectangle2D food = new Rectangle2D.Double(rand.nextInt(30)*15, rand.nextInt(30)*15, snakeSize, snakeSize);
     static boolean onScreen[] = new boolean[length * length];
     static Rectangle2D snake[] = new Rectangle2D[length * length];
-    static Thread t = new Thread (new Runnable ()
-                                  {
-        @Override
-        public void run ()
-        {
-            while(!gameEnd)
-            {
-                try
-                {
-                    if (head.getY() == 435.00  )
-                    {
-                        if (head.getX() == 435)
-                        {
-                            direction = "UP";
-                        }
-                        else
-                        {
-                            direction ="RIGHT";
-                        }
-                        
-                    }
-                    if(head.getX() == food.getX() && head.getY() == food.getY())
-                    {
-                        food.setRect(rand.nextInt(30)*15, rand.nextInt(30)*15, snakeSize, snakeSize);
-                    }
-                    arrowKey(direction, (Graphics)frame.getGraphics());
-                    Thread.sleep(250);
-                    // System.out.println("YO");
-                }
-                catch (InterruptedException e)
-                {
-                    System.out.println("Interrupted");
-                }
-            }
-            
-            System.out.println("Game Over!!!");
-        }
-        
-    });;
+    private static Thread t;
     
     public GUI()
     {
@@ -74,12 +38,36 @@ public class GUI extends Canvas
     
     static Canvas canvas = new GUI();
     
-    public static void start() // Usless Method, just declare thread globally, and start it in main method
+    public static void start()
     {
-        /*if (t == null) // Why is this here
-         {*/
-        t.start();
-        /*}*/
+        if (t == null)
+        {
+            t = new Thread (new Runnable ()
+            {
+                
+                @Override
+                public void run()
+                {
+                    while(!gameEnd)
+                    {
+                        try
+                        {
+                            arrowKey(direction, (Graphics)frame.getGraphics());
+                            Thread.sleep(250);
+                            System.out.println("YO");
+                        }
+                        catch (InterruptedException e)
+                        {
+                            System.out.println("Interrupted");
+                        }
+                    }
+                    
+                    System.out.println("Game Over!!!");
+                }
+                
+            });
+            t.start();
+        }
     }
     
     public static void main(String[] args)
@@ -98,7 +86,7 @@ public class GUI extends Canvas
         frame.getContentPane().add(canvas);
         frame.pack();
         frame.setVisible(true);
-        t.start();
+        start();
     }
     
     
@@ -108,8 +96,6 @@ public class GUI extends Canvas
         Graphics2D g2 = (Graphics2D) g;
         g2.setColor(Color.GREEN);
         g2.fill(head);
-        g2.setColor(Color.RED);
-        g2.fill(food);
         
         g2.setColor(Color.BLACK);
         for(int i = 0; i < length; i++)
@@ -149,19 +135,19 @@ public class GUI extends Canvas
         @Override
         public void keyPressed(KeyEvent e)
         {
-            if (e.getKeyCode() == KeyEvent.VK_RIGHT )
+            if (e.getKeyCode() == KeyEvent.VK_RIGHT ) 
             {
                 direction = "RIGHT";
             }
-            else if (e.getKeyCode() == KeyEvent.VK_LEFT )
+            else if (e.getKeyCode() == KeyEvent.VK_LEFT ) 
             {
                 direction = "LEFT";
             }
-            else if (e.getKeyCode() == KeyEvent.VK_UP )
+            else if (e.getKeyCode() == KeyEvent.VK_UP ) 
             {
                 direction = "UP";
             }
-            else if (e.getKeyCode() == KeyEvent.VK_DOWN )
+            else if (e.getKeyCode() == KeyEvent.VK_DOWN ) 
             {
                 direction = "DOWN";
             }
@@ -172,12 +158,12 @@ public class GUI extends Canvas
         }
         
         @Override
-        public void keyReleased(KeyEvent arg0)
+        public void keyReleased(KeyEvent arg0) 
         {}
         
         @Override
-        public void keyTyped(KeyEvent arg0)
-        {}
+        public void keyTyped(KeyEvent arg0) 
+        {}	
     }
     
     
