@@ -3,7 +3,9 @@ package snake;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
+
 import javax.swing.JFrame;
+
 import java.util.*;
 
 public class GUI extends Canvas
@@ -20,39 +22,58 @@ public class GUI extends Canvas
     static Ellipse2D food = new Ellipse2D.Double(rand.nextInt(29)*15, rand.nextInt(29)*15, snakeSize, snakeSize);
     static boolean onScreen[] = new boolean[length * length];
     static Rectangle2D snake[] = new Rectangle2D[length * length];
-    private static Thread t = new Thread (new Runnable ()
-                                          { //why is this all the way out here???
+    
+    static Rectangle2D readInstr = new Rectangle2D.Double(120, 210, 210, 60);
+    
+    public static Thread t = new Thread (new Runnable ()
+    {
         @Override
         public void run()
         {
-            while(!gameEnd)
-            {
-                try
-                {
-                    arrowKey(direction, (Graphics)frame.getGraphics());
-                    if (head.getX() == food.getX() && head.getY() == food.getY())
-                    {
-                        score+= 5;
-                        food.setFrame(rand.nextInt(29)*15, rand.nextInt(29)*15, snakeSize, snakeSize);
-                        canvas.repaint();
-                    }
-                    
-                    if(head.getX() < 0 || head.getY() < 0 || head.getX() >= snakeSize * length || head.getY() >= snakeSize * length)
-                    	gameEnd = true;
-                    Thread.sleep(100);
-                    
-                }
-                catch (InterruptedException e)
-                {
-                    System.out.println("Interrupted");
-                    
-                }
-            }
+        	while(true)
+        	{
+	            while(!gameEnd)
+	            {
+	                try
+	                {
+	                    arrowKey(direction, (Graphics)frame.getGraphics());
+	                    if (head.getX() == food.getX() && head.getY() == food.getY())
+	                    {
+	                        score+= 5;
+	                        food.setFrame(rand.nextInt(29)*15, rand.nextInt(29)*15, snakeSize, snakeSize);
+	                        canvas.repaint();
+	                        
+	                    }
+	                    
+	                    if(head.getX() < 0 || head.getY() < 0 || head.getX() >= snakeSize * length || head.getY() >= snakeSize * length)
+	                    	gameEnd = true;
+	                    Thread.sleep(100);
+	                    
+	                }
+	                catch (InterruptedException e)
+	                {
+	                    System.out.println("Interrupted");
+	                    
+	                }
+	            }
+	            
+	            Graphics2D g = ((Graphics2D)canvas.getGraphics());
+	            g.setColor(Color.WHITE);
+	            g.fill(readInstr);
+	           
+	            canvas.getGraphics().drawString("GAME OVER", length * snakeSize / 2 - 40, length*snakeSize/2);
+	            canvas.getGraphics().drawString("Click ESC to quit...", length * snakeSize / 2 - 53, length*snakeSize/2 + 20);
+	            canvas.getGraphics().drawString("Press any other key to play again...", length * snakeSize / 2 - 92, length*snakeSize/2 + 40);
+	            try {
+					Thread.sleep(100);
+					System.out.print(" ");
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+        	
+        	}
             
-            
-            canvas.getGraphics().drawString("GAME OVER", length * snakeSize / 2 - 40, length*snakeSize/2);
-            
-            //System.exit(0);
         }
         
     });;
@@ -76,7 +97,6 @@ public class GUI extends Canvas
     
     public static void main(String[] args)
     {
-        
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         canvas.setSize(length * snakeSize, length * snakeSize);
@@ -98,11 +118,15 @@ public class GUI extends Canvas
     public void paint (Graphics g)
     {
         Graphics2D g2 = (Graphics2D) g;
+        g2.setColor(Color.WHITE);
+        g2.drawRect(0, 0, length * snakeSize, length * snakeSize + 50);
+        
         g2.setColor(Color.GREEN);
         g2.fill(head);
         g2.setColor(Color.RED);
         g2.fill(food);
         g2.setColor(Color.BLACK);
+        
         for(int i = 0; i < length; i++)
         {
             g.drawLine(snakeSize * i, 0, snakeSize * i, length*snakeSize);
@@ -133,6 +157,31 @@ public class GUI extends Canvas
         {
             head.setFrame(head.getX(), head.getY() + snakeSize, snakeSize, snakeSize);
         }
+        else if(string.equals("ESC"))
+        {
+        	System.exit(0);
+        }
+        else
+        {
+        	gameEnd = false;
+        	direction = "DOWN";
+        	score = 0;
+        	head.setFrame(60, 60, snakeSize, snakeSize);
+        	g2.setColor(Color.GREEN);
+            g2.fill(head);
+            g2.setColor(Color.RED);
+            g2.fill(food);
+            g2.setColor(Color.BLACK);
+            food.setFrame(rand.nextInt(29)*15, rand.nextInt(29)*15, snakeSize, snakeSize);
+            for(int i = 0; i < length; i++)
+            {
+                g.drawLine(snakeSize * i, 0, snakeSize * i, length*snakeSize);
+                g.drawLine(0, snakeSize * i, length*snakeSize, snakeSize * i);
+            }
+            
+            g2.drawString(score + "", length * snakeSize / 2 - 10, length*snakeSize + 15);
+        }
+        
         
         canvas.repaint();
         
@@ -158,10 +207,15 @@ public class GUI extends Canvas
             {
                 direction = "DOWN";
             }
-            /*else
-             {
-             arrowKey("ELSE", (Graphics)e.getComponent().getGraphics());
-             }*/
+            else if(e.getKeyCode() == KeyEvent.VK_ESCAPE)
+            {
+            	arrowKey("ESC", e.getComponent().getGraphics());
+            }
+            else
+            {
+            	if(gameEnd)
+            		arrowKey("ELSE", e.getComponent().getGraphics());
+            }
         }
         
         @Override
