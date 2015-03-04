@@ -1,5 +1,3 @@
-package snake;
-
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
@@ -14,7 +12,7 @@ public class GUI extends Canvas
     static String direction = "DOWN";
     static int score = 0;
     static boolean gameEnd = false;
-    Random rand = new Random();
+    static Random rand = new Random();
     static final int length = 30;
     static final int snakeSize = 15;
     static Rectangle2D head = new Rectangle2D.Double(60, 60, snakeSize, snakeSize);
@@ -22,7 +20,7 @@ public class GUI extends Canvas
     static boolean onScreen[] = new boolean[length * length];
     static Rectangle2D snake[] = new Rectangle2D[length * length];
     private static Thread t = new Thread (new Runnable ()
-    {
+                                          {
         @Override
         public void run()
         {
@@ -67,36 +65,36 @@ public class GUI extends Canvas
     static Canvas canvas = new GUI();
     
     /*public static void start()
-    {
-        if (t == null)
-        {
-            t = new Thread (new Runnable ()
-            {
-                
-                @Override
-                public void run()
-                {
-                    while(!gameEnd)
-                    {
-                        try
-                        {
-                            arrowKey(direction, (Graphics)frame.getGraphics());
-                            Thread.sleep(100);
-                            System.out.println("YO");
-                        }
-                        catch (InterruptedException e)
-                        {
-                            System.out.println("Interrupted");
-                        }
-                    }
-                    
-                    System.out.println("Game Over!!!");
-                }
-                
-            });
-            t.start();
-        }
-    }*/
+     {
+     if (t == null)
+     {
+     t = new Thread (new Runnable ()
+     {
+     
+     @Override
+     public void run()
+     {
+     while(!gameEnd)
+     {
+     try
+     {
+     arrowKey(direction, (Graphics)frame.getGraphics());
+     Thread.sleep(100);
+     System.out.println("YO");
+     }
+     catch (InterruptedException e)
+     {
+     System.out.println("Interrupted");
+     }
+     }
+     
+     System.out.println("Game Over!!!");
+     }
+     
+     });
+     t.start();
+     }
+     }*/
     
     public static void main(String[] args)
     {
@@ -124,7 +122,8 @@ public class GUI extends Canvas
         Graphics2D g2 = (Graphics2D) g;
         g2.setColor(Color.GREEN);
         g2.fill(head);
-        
+        g2.setColor(Color.RED);
+        g2.fill(food);
         g2.setColor(Color.BLACK);
         for(int i = 0; i < length; i++)
         {
@@ -163,19 +162,19 @@ public class GUI extends Canvas
         @Override
         public void keyPressed(KeyEvent e)
         {
-            if (e.getKeyCode() == KeyEvent.VK_RIGHT ) 
+            if (e.getKeyCode() == KeyEvent.VK_RIGHT )
             {
                 direction = "RIGHT";
             }
-            else if (e.getKeyCode() == KeyEvent.VK_LEFT ) 
+            else if (e.getKeyCode() == KeyEvent.VK_LEFT )
             {
                 direction = "LEFT";
             }
-            else if (e.getKeyCode() == KeyEvent.VK_UP ) 
+            else if (e.getKeyCode() == KeyEvent.VK_UP )
             {
                 direction = "UP";
             }
-            else if (e.getKeyCode() == KeyEvent.VK_DOWN ) 
+            else if (e.getKeyCode() == KeyEvent.VK_DOWN )
             {
                 direction = "DOWN";
             }
@@ -186,12 +185,12 @@ public class GUI extends Canvas
         }
         
         @Override
-        public void keyReleased(KeyEvent arg0) 
+        public void keyReleased(KeyEvent arg0)
         {}
         
         @Override
-        public void keyTyped(KeyEvent arg0) 
-        {}	
+        public void keyTyped(KeyEvent arg0)
+        {}
     }
     
     
