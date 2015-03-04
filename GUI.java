@@ -1,4 +1,4 @@
-
+package snake;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -36,14 +36,14 @@ public class GUI extends Canvas
         onScreen[0] = true;
     }
     
-    
+    static Canvas canvas = new GUI();
     
     public static void start()
     {
         if (t == null)
         {
             t = new Thread (new Runnable ()
-                            {
+            {
                 
                 @Override
                 public void run()
@@ -52,8 +52,9 @@ public class GUI extends Canvas
                     {
                         try
                         {
-                            arrowKey(direction, (Graphics)frame.getCompnent().getGraphics());
-                            Thread.sleep(500);
+                            arrowKey(direction, (Graphics)frame.getGraphics());
+                            Thread.sleep(250);
+                            System.out.println("YO");
                         }
                         catch (InterruptedException e)
                         {
@@ -65,7 +66,7 @@ public class GUI extends Canvas
                 }
                 
             });
-            t.start ();
+            t.start();
         }
     }
     
@@ -74,7 +75,6 @@ public class GUI extends Canvas
         
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
-        Canvas canvas = new GUI();
         canvas.setSize(length * snakeSize, length * snakeSize);
         
         frame.setPreferredSize(new Dimension(length*snakeSize, length*snakeSize));
@@ -120,14 +120,14 @@ public class GUI extends Canvas
         }
         else if(string.equals("UP"))
         {
-            head.setFrame(head.getX(), head.getY() + snakeSize, snakeSize, snakeSize);
+            head.setFrame(head.getX(), head.getY() - snakeSize, snakeSize, snakeSize);
         }
         else if(string.equals("DOWN"))
         {
-            head.setFrame(head.getX(), head.getY() - snakeSize, snakeSize, snakeSize);
+            head.setFrame(head.getX(), head.getY() + snakeSize, snakeSize, snakeSize);
         }
         
-        repaint();
+        canvas.repaint();
         
     }
     public class keyHandler implements KeyListener
