@@ -40,11 +40,10 @@ public class GUI extends Canvas
     
     public static void start()
     {
-        if (t == null)
+        if (t == null) // Why is this here
         {
             t = new Thread (new Runnable ()
             {
-                
                 @Override
                 public void run()
                 {
