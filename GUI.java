@@ -12,14 +12,43 @@ public class GUI extends Canvas
     static JFrame frame = new JFrame("Snake!!!");
     
     static String direction = "DOWN";
+    static int score = 0;
     static boolean gameEnd = false;
     Random rand = new Random();
     static final int length = 30;
     static final int snakeSize = 15;
     static Rectangle2D head = new Rectangle2D.Double(60, 60, snakeSize, snakeSize);
+    static Rectangle2D food = new Rectangle2D.Double(rand.nextInt(30)*15, rand.nextInt(30)*15, snakeSize, snakeSize);
     static boolean onScreen[] = new boolean[length * length];
     static Rectangle2D snake[] = new Rectangle2D[length * length];
-    private static Thread t;
+    private static Thread t = new Thread (new Runnable ()
+    {
+        @Override
+        public void run()
+        {
+            while(!gameEnd)
+            {
+                try
+                {
+                    arrowKey(direction, (Graphics)frame.getGraphics());
+                    Thread.sleep(100);
+                    System.out.println("YO");
+                    if (head.getX() == food.getX() && head.getY() == food.getY())
+                    {
+                        score++;
+                        food.setRect(rand.nextInt(30)*15, rand.nextInt(30)*15, snakeSize, snakeSize);
+                    }
+                }
+                catch (InterruptedException e)
+                {
+                    System.out.println("Interrupted");
+                }
+            }
+            
+            System.out.println("Game Over!!!");
+        }
+        
+    });;
     
     public GUI()
     {
@@ -27,7 +56,6 @@ public class GUI extends Canvas
         keyHandler listener = new keyHandler();
         addKeyListener(listener);
         setFocusable(true);
-        
         for(int i = 0; i < onScreen.length; i++)
         {
             onScreen[i] = false;
@@ -38,7 +66,7 @@ public class GUI extends Canvas
     
     static Canvas canvas = new GUI();
     
-    public static void start()
+    /*public static void start()
     {
         if (t == null)
         {
@@ -68,7 +96,7 @@ public class GUI extends Canvas
             });
             t.start();
         }
-    }
+    }*/
     
     public static void main(String[] args)
     {
@@ -86,7 +114,7 @@ public class GUI extends Canvas
         frame.getContentPane().add(canvas);
         frame.pack();
         frame.setVisible(true);
-        start();
+        t.start();
     }
     
     
