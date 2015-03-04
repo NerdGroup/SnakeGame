@@ -1,8 +1,9 @@
+package snake;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
 import javax.swing.JFrame;
-import javax.swing.Timer;
 import java.util.*;
 
 public class GUI extends Canvas
@@ -16,7 +17,7 @@ public class GUI extends Canvas
     static final int length = 30;
     static final int snakeSize = 15;
     static Rectangle2D head = new Rectangle2D.Double(60, 60, snakeSize, snakeSize);
-    static Ellipse2D food = new Ellipse2D.Double(rand.nextInt(30)*15, rand.nextInt(30)*15, snakeSize, snakeSize);
+    static Ellipse2D food = new Ellipse2D.Double(rand.nextInt(29)*15, rand.nextInt(29)*15, snakeSize, snakeSize);
     static boolean onScreen[] = new boolean[length * length];
     static Rectangle2D snake[] = new Rectangle2D[length * length];
     private static Thread t = new Thread (new Runnable ()
@@ -31,11 +32,13 @@ public class GUI extends Canvas
                     arrowKey(direction, (Graphics)frame.getGraphics());
                     if (head.getX() == food.getX() && head.getY() == food.getY())
                     {
-                        score++;
-                        food.setEllipse(rand.nextInt(30)*15, rand.nextInt(30)*15, snakeSize, snakeSize);
-                        //repaint?
+                        score+= 5;
+                        food.setFrame(rand.nextInt(29)*15, rand.nextInt(29)*15, snakeSize, snakeSize);
+                        canvas.repaint();
                     }
                     
+                    if(head.getX() < 0 || head.getY() < 0 || head.getX() >= snakeSize * length || head.getY() >= snakeSize * length)
+                    	gameEnd = true;
                     Thread.sleep(100);
                     
                 }
@@ -46,7 +49,10 @@ public class GUI extends Canvas
                 }
             }
             
-            System.out.println("Game Over!!!");
+            
+            canvas.getGraphics().drawString("GAME OVER", length * snakeSize / 2 - 40, length*snakeSize/2);
+            
+            //System.exit(0);
         }
         
     });;
@@ -75,12 +81,12 @@ public class GUI extends Canvas
         
         canvas.setSize(length * snakeSize, length * snakeSize);
         
-        frame.setPreferredSize(new Dimension(length*snakeSize, length*snakeSize + 15));
-        frame.setMaximumSize(new Dimension(length*snakeSize, length*snakeSize + 15));
-        frame.setMinimumSize(new Dimension(length*snakeSize, length*snakeSize + 15));
+        frame.setPreferredSize(new Dimension(length*snakeSize + 7, length*snakeSize + 50));
+        frame.setMaximumSize(new Dimension(length*snakeSize + 7, length*snakeSize + 50));
+        frame.setMinimumSize(new Dimension(length*snakeSize + 7, length*snakeSize + 50));
         frame.setResizable(false);
         
-        frame.setSize(length*snakeSize, length*snakeSize);
+        frame.setSize(length*snakeSize + 7, length*snakeSize + 50);
         frame.getContentPane().add(canvas);
         frame.pack();
         frame.setVisible(true);
@@ -103,7 +109,7 @@ public class GUI extends Canvas
             g.drawLine(0, snakeSize * i, length*snakeSize, snakeSize * i);
         }
         
-        g2.drawString(String.parseString(score), length * snakeSize / 2 - 10, length*snakeSize);
+        g2.drawString(score + "", length * snakeSize / 2 - 10, length*snakeSize + 15);
     }
     
     
