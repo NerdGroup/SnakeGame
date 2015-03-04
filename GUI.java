@@ -16,7 +16,7 @@ public class GUI extends Canvas
     static final int length = 30;
     static final int snakeSize = 15;
     static Rectangle2D head = new Rectangle2D.Double(60, 60, snakeSize, snakeSize);
-    static Rectangle2D food = new Rectangle2D.Double(rand.nextInt(30)*15, rand.nextInt(30)*15, snakeSize, snakeSize);
+    static Ellipse2D food = new Ellipse2D.Double(rand.nextInt(30)*15, rand.nextInt(30)*15, snakeSize, snakeSize);
     static boolean onScreen[] = new boolean[length * length];
     static Rectangle2D snake[] = new Rectangle2D[length * length];
     private static Thread t = new Thread (new Runnable ()
@@ -64,37 +64,6 @@ public class GUI extends Canvas
     
     static Canvas canvas = new GUI();
     
-    /*public static void start()
-     {
-     if (t == null)
-     {
-     t = new Thread (new Runnable ()
-     {
-     
-     @Override
-     public void run()
-     {
-     while(!gameEnd)
-     {
-     try
-     {
-     arrowKey(direction, (Graphics)frame.getGraphics());
-     Thread.sleep(100);
-     System.out.println("YO");
-     }
-     catch (InterruptedException e)
-     {
-     System.out.println("Interrupted");
-     }
-     }
-     
-     System.out.println("Game Over!!!");
-     }
-     
-     });
-     t.start();
-     }
-     }*/
     
     public static void main(String[] args)
     {
