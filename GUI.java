@@ -1,10 +1,7 @@
-package snake;
-
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
 import javax.swing.JFrame;
-import javax.swing.Timer;
 import java.util.*;
 
 public class GUI extends Canvas
@@ -19,7 +16,41 @@ public class GUI extends Canvas
     static Rectangle2D head = new Rectangle2D.Double(60, 60, snakeSize, snakeSize);
     static boolean onScreen[] = new boolean[length * length];
     static Rectangle2D snake[] = new Rectangle2D[length * length];
-    private static Thread t;
+    static Thread t = new Thread (new Runnable ()
+                                  {
+        @Override
+        public void run ()
+        {
+            while(!gameEnd)
+            {
+                try
+                {
+                    if (head.getY() == 435.00  )
+                    {
+                        if (head.getX() == 435)
+                        {
+                            direction = "UP";
+                        }
+                        else
+                        {
+                            direction ="RIGHT";
+                        }
+                        
+                    }
+                    arrowKey(direction, (Graphics)frame.getGraphics());
+                    Thread.sleep(250);
+                    // System.out.println("YO");
+                }
+                catch (InterruptedException e)
+                {
+                    System.out.println("Interrupted");
+                }
+            }
+            
+            System.out.println("Game Over!!!");
+        }
+        
+    });;
     
     public GUI()
     {
@@ -38,35 +69,12 @@ public class GUI extends Canvas
     
     static Canvas canvas = new GUI();
     
-    public static void start()
+    public static void start() // Usless Method, just declare thread globally, and start it in main method
     {
-        if (t == null) // Why is this here
-        {
-            t = new Thread (new Runnable ()
-            {
-                @Override
-                public void run()
-                {
-                    while(!gameEnd)
-                    {
-                        try
-                        {
-                            arrowKey(direction, (Graphics)frame.getGraphics());
-                            Thread.sleep(250);
-                            System.out.println("YO");
-                        }
-                        catch (InterruptedException e)
-                        {
-                            System.out.println("Interrupted");
-                        }
-                    }
-                    
-                    System.out.println("Game Over!!!");
-                }
-                
-            });
-            t.start();
-        }
+        /*if (t == null) // Why is this here
+         {*/
+        t.start();
+        /*}*/
     }
     
     public static void main(String[] args)
@@ -85,7 +93,7 @@ public class GUI extends Canvas
         frame.getContentPane().add(canvas);
         frame.pack();
         frame.setVisible(true);
-        start();
+        t.start();
     }
     
     
