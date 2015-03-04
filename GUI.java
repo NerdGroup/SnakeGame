@@ -53,7 +53,7 @@ public class GUI extends Canvas
                         try
                         {
                             arrowKey(direction, (Graphics)frame.getGraphics());
-                            Thread.sleep(250);
+                            Thread.sleep(100);
                             System.out.println("YO");
                         }
                         catch (InterruptedException e)
