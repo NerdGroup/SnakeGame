@@ -7,7 +7,7 @@ import java.util.*;
 
 public class GUI extends Canvas
 {
-    static JFrame frame = new JFrame("Snake!!!");
+    static JFrame frame = new JFrame("Snake Game!");
     
     static String direction = "DOWN";
     static int score = 0;
@@ -20,7 +20,7 @@ public class GUI extends Canvas
     static boolean onScreen[] = new boolean[length * length];
     static Rectangle2D snake[] = new Rectangle2D[length * length];
     private static Thread t = new Thread (new Runnable ()
-                                          {
+                                          { //why is this all the way out here???
         @Override
         public void run()
         {
@@ -29,17 +29,20 @@ public class GUI extends Canvas
                 try
                 {
                     arrowKey(direction, (Graphics)frame.getGraphics());
-                    Thread.sleep(100);
-                    System.out.println("YO");
                     if (head.getX() == food.getX() && head.getY() == food.getY())
                     {
                         score++;
-                        food.setRect(rand.nextInt(30)*15, rand.nextInt(30)*15, snakeSize, snakeSize);
+                        food.setEllipse(rand.nextInt(30)*15, rand.nextInt(30)*15, snakeSize, snakeSize);
+                        //repaint?
                     }
+                    
+                    Thread.sleep(100);
+                    
                 }
                 catch (InterruptedException e)
                 {
                     System.out.println("Interrupted");
+                    
                 }
             }
             
@@ -72,9 +75,9 @@ public class GUI extends Canvas
         
         canvas.setSize(length * snakeSize, length * snakeSize);
         
-        frame.setPreferredSize(new Dimension(length*snakeSize, length*snakeSize));
-        frame.setMaximumSize(new Dimension(length*snakeSize, length*snakeSize));
-        frame.setMinimumSize(new Dimension(length*snakeSize, length*snakeSize));
+        frame.setPreferredSize(new Dimension(length*snakeSize, length*snakeSize + 15));
+        frame.setMaximumSize(new Dimension(length*snakeSize, length*snakeSize + 15));
+        frame.setMinimumSize(new Dimension(length*snakeSize, length*snakeSize + 15));
         frame.setResizable(false);
         
         frame.setSize(length*snakeSize, length*snakeSize);
@@ -99,6 +102,8 @@ public class GUI extends Canvas
             g.drawLine(snakeSize * i, 0, snakeSize * i, length*snakeSize);
             g.drawLine(0, snakeSize * i, length*snakeSize, snakeSize * i);
         }
+        
+        g2.drawString(String.parseString(score), length * snakeSize / 2 - 10, length*snakeSize);
     }
     
     
