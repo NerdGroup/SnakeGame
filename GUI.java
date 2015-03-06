@@ -1,5 +1,3 @@
-package snake;
-
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
@@ -31,80 +29,86 @@ public class GUI extends Canvas
     static int numOfRectToMove = 0;
     
     public static Thread t = new Thread (new Runnable ()
-    {
-    	
+                                         {
         @Override
         public void run()
         {
-            
-        	while(true)
-        	{
-	            while(!gameEnd)
-	            {
-	                try
-	                {
-	                	if(changeD)
-	                	{
-	                		snake[numOfRectToMove].direction = changeDirection;
-	                		numOfRectToMove++;
-	                	}
-	                	if(numOfRectToMove >= currentLength)
-	                	{
-	                		changeD = false;
-	                		numOfRectToMove = 0;
-	                	}
-	                	for(int i = 0; i < length*length; i++)
-	                	{
-	                		if(!snake[i].onScreen)
-	                			break;
-	                		arrowKey(snake[i].direction, (Graphics)frame.getGraphics(), i);
-	                	}
-	                    if (head.getX() == food.getX() && head.getY() == food.getY())
-	                    {
-	                        score+= 5;
-	                        food.setFrame(rand.nextInt(29)*15, rand.nextInt(29)*15, snakeSize, snakeSize);
-	                        canvas.repaint();
-	                        snake[currentLength] = new rect();
-	                        snake[currentLength].rectangle = new Rectangle2D.Double(snake[currentLength -1].rectangle.getX(), snake[currentLength -1].rectangle.getY(), snakeSize, snakeSize);
-	                        snake[currentLength].direction = snake[currentLength-1].direction;
-	                        snake[currentLength].onScreen = true;
-	                        
-	                        Graphics2D g = (Graphics2D)frame.getGraphics();
-	                        g.fill(snake[currentLength].rectangle);
-	                        
-	                        currentLength++;
-	                        if(changeD)
-	                        	numOfRectToMove++;
-	                    }
-	                    
-	                    if(head.getX() < 0 || head.getY() < 0 || head.getX() >= snakeSize * length || head.getY() >= snakeSize * length)
-	                    	gameEnd = true;
-	                    Thread.sleep(100);
-	                    
-	                }
-	                catch (InterruptedException e)
-	                {
-	                    System.out.println("Interrupted");
-	                    
-	                }
-	            }
-	            
-	            Graphics2D g = ((Graphics2D)canvas.getGraphics());
-	            g.setColor(Color.WHITE);
-	            g.fill(readInstr);
-	           
-	            canvas.getGraphics().drawString("GAME OVER", length * snakeSize / 2 - 40, length*snakeSize/2);
-	            canvas.getGraphics().drawString("Click ESC to quit...", length * snakeSize / 2 - 53, length*snakeSize/2 + 20);
-	            canvas.getGraphics().drawString("Press any other key to play again...", length * snakeSize / 2 - 92, length*snakeSize/2 + 40);
-	            try {
-					Thread.sleep(100);
-					System.out.print(" ");
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-        	
-        	}
+            Graphics2D g2 = ((Graphics2D)canvas.getGraphics());
+            while(true)
+            {
+                g2.setColor(Color.WHITE);
+                g2.drawRect(0, 0, length * snakeSize, length * snakeSize + 50);
+                
+                while(!gameEnd)
+                {
+                    try
+                    {
+                        if(changeD)
+                        {
+                            snake[numOfRectToMove].direction = changeDirection;
+                            numOfRectToMove++;
+                        }
+                        if(numOfRectToMove >= currentLength)
+                        {
+                            changeD = false;
+                            numOfRectToMove = 0;
+                        }
+                        for(int i = 0; i < length*length; i++)
+                        {
+                            if(!snake[i].onScreen)
+                                break;
+                            if (snake[i].direction.equals(""))
+                                break;
+                            
+                            //System.out.println(snake[i].direction + i);
+                            arrowKey(snake[i].direction, (Graphics)frame.getGraphics(), i);
+                        }
+                        if (head.getX() == food.getX() && head.getY() == food.getY())
+                        {
+                            score+= 5;
+                            food.setFrame(rand.nextInt(29)*15, rand.nextInt(29)*15, snakeSize, snakeSize);
+                            canvas.repaint();
+                            snake[currentLength].rectangle = new Rectangle2D.Double(snake[currentLength -1].rectangle.getX(), snake[currentLength -1].rectangle.getY(), snakeSize, snakeSize);
+                            snake[currentLength].direction = snake[currentLength-1].direction;
+                            snake[currentLength].onScreen = true;
+                            
+                            
+                            g2.setColor(Color.BLACK);
+                            g2.fill(snake[currentLength].rectangle);
+                            
+                            currentLength++;
+                            if(changeD)
+                                numOfRectToMove++;
+                        }
+                        
+                        if(head.getX() < 0 || head.getY() < 0 || head.getX() >= snakeSize * length || head.getY() >= snakeSize * length)
+                            gameEnd = true;
+                        Thread.sleep(100);
+                        
+                    }
+                    catch (InterruptedException e)
+                    {
+                        System.out.println("Interrupted");
+                        
+                    }
+                }
+                
+                Graphics2D g = ((Graphics2D)canvas.getGraphics());
+                g.setColor(Color.WHITE);
+                g.fill(readInstr);
+                
+                canvas.getGraphics().drawString("GAME OVER", length * snakeSize / 2 - 40, length*snakeSize/2);
+                canvas.getGraphics().drawString("Click ESC to quit...", length * snakeSize / 2 - 53, length*snakeSize/2 + 20);
+                canvas.getGraphics().drawString("Press any other key to play again...", length * snakeSize / 2 - 92, length*snakeSize/2 + 40);
+                try {
+                    Thread.sleep(100);
+                    //System.out.print(" ");
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                
+            }
             
         }
         
@@ -139,7 +143,7 @@ public class GUI extends Canvas
         frame.setVisible(true);
         
         for(int i = 0; i < length * length; i++)
-        	snake[i] = new rect();
+            snake[i] = new rect();
         snake[0].rectangle = head;
         snake[0].onScreen = true;
         snake[0].direction = "DOWN";
@@ -151,20 +155,26 @@ public class GUI extends Canvas
     public void paint (Graphics g)
     {
         Graphics2D g2 = (Graphics2D) g;
-        g2.setColor(Color.WHITE);
-        g2.drawRect(0, 0, length * snakeSize, length * snakeSize + 50);
         
         g2.setColor(Color.GREEN);
         g2.fill(head);
+        
+        for(int i = 0; i < length*length; i++)
+        {
+            if(!snake[i].onScreen)
+                break;
+            g2.fill(snake[i].rectangle);
+        }
+        
         g2.setColor(Color.RED);
         g2.fill(food);
         g2.setColor(Color.BLACK);
-        
         for(int i = 0; i < length; i++)
         {
-            g.drawLine(snakeSize * i, 0, snakeSize * i, length*snakeSize);
-            g.drawLine(0, snakeSize * i, length*snakeSize, snakeSize * i);
+            g2.drawLine(snakeSize * i, 0, snakeSize * i, length*snakeSize);
+            g2.drawLine(0, snakeSize * i, length*snakeSize, snakeSize * i);
         }
+        
         
         g2.drawString(score + "", length * snakeSize / 2 - 10, length*snakeSize + 15);
     }
@@ -180,35 +190,37 @@ public class GUI extends Canvas
         }
         else if(string.equals("LEFT"))
         {
-        	snake[x].rectangle.setFrame(head.getX() - snakeSize, head.getY(), snakeSize, snakeSize);
+            snake[x].rectangle.setFrame(head.getX() - snakeSize, head.getY(), snakeSize, snakeSize);
         }
         else if(string.equals("UP"))
         {
-        	snake[x].rectangle.setFrame(head.getX(), head.getY() - snakeSize, snakeSize, snakeSize);
+            snake[x].rectangle.setFrame(head.getX(), head.getY() - snakeSize, snakeSize, snakeSize);
         }
         else if(string.equals("DOWN"))
         {
-        	snake[x].rectangle.setFrame(head.getX(), head.getY() + snakeSize, snakeSize, snakeSize);
+            snake[x].rectangle.setFrame(head.getX(), head.getY() + snakeSize, snakeSize, snakeSize);
         }
         else if(string.equals("ESC"))
         {
-        	System.exit(0);
+            System.exit(0);
         }
         else
         {
-        	gameEnd = false;
-        	for(int i = 4; i < length * length; i++)
-        	{
-        		if(!snake[i].onScreen)
-        		{
-        			break;
-        		}
-        		snake[i].onScreen = false;
-        		snake[i].rectangle = null;
-        	}
-        	score = 0;
-        	head.setFrame(60, 60, snakeSize, snakeSize);
-        	g2.setColor(Color.GREEN);
+            gameEnd = false;
+            for(int i = 1; i < length * length; i++)
+            {
+                if(!snake[i].onScreen)
+                {
+                    break;
+                }
+                snake[i].onScreen = false;
+                snake[i].rectangle = null;
+            }
+            score = 0;
+            currentLength = 1;
+            snake[0].direction = "DOWN";
+            head.setFrame(60, 60, snakeSize, snakeSize);
+            g2.setColor(Color.GREEN);
             g2.fill(head);
             g2.setColor(Color.RED);
             g2.fill(food);
@@ -225,7 +237,6 @@ public class GUI extends Canvas
         
         
         canvas.repaint();
-        
     }
     public class keyHandler implements KeyListener
     {
@@ -254,12 +265,12 @@ public class GUI extends Canvas
             }
             else if(e.getKeyCode() == KeyEvent.VK_ESCAPE)
             {
-            	arrowKey("ESC", e.getComponent().getGraphics(), 0);
+                arrowKey("ESC", e.getComponent().getGraphics(), 0);
             }
             else
             {
-            	if(gameEnd)
-            		arrowKey("ELSE", e.getComponent().getGraphics(), 0);
+                if(gameEnd)
+                    arrowKey("ELSE", e.getComponent().getGraphics(), 0);
             }
         }
         
@@ -271,6 +282,4 @@ public class GUI extends Canvas
         public void keyTyped(KeyEvent arg0)
         {}
     }
-    
-    
 }
