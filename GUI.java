@@ -9,7 +9,6 @@ import java.util.*;
 public class GUI extends Canvas
 {
     static JFrame frame = new JFrame("Snake Game!");
-    
     static int score = 0;
     static int currentLength = 1;
     static boolean gameEnd = false;
@@ -92,7 +91,6 @@ public class GUI extends Canvas
                         
                     }
                 }
-                
                 Graphics2D g = ((Graphics2D)canvas.getGraphics());
                 g.setColor(Color.WHITE);
                 g.fill(readInstr);
@@ -107,16 +105,12 @@ public class GUI extends Canvas
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
-                
             }
-            
         }
         
-    });;
-    
+    });
     public GUI()
     {
-        // if grid starts at (15, 15) and ends at (435, 435)
         keyHandler listener = new keyHandler();
         addKeyListener(listener);
         setFocusable(true);
