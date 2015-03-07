@@ -1,9 +1,7 @@
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
-
 import javax.swing.JFrame;
-
 import java.util.*;
 
 public class GUI extends Canvas
@@ -35,7 +33,6 @@ public class GUI extends Canvas
             Graphics2D g2 = ((Graphics2D)canvas.getGraphics());
             while(true)
             {
-                g2.setColor(Color.WHITE);
                 g2.drawRect(0, 0, length * snakeSize, length * snakeSize + 50);
                 
                 while(!gameEnd)
@@ -72,9 +69,6 @@ public class GUI extends Canvas
                             snake[currentLength].onScreen = true;
                             
                             
-                            g2.setColor(Color.BLACK);
-                            g2.fill(snake[currentLength].rectangle);
-                            
                             currentLength++;
                             if(changeD)
                                 numOfRectToMove++;
@@ -91,13 +85,12 @@ public class GUI extends Canvas
                         
                     }
                 }
-                Graphics2D g = ((Graphics2D)canvas.getGraphics());
-                g.setColor(Color.WHITE);
-                g.fill(readInstr);
+                g2.setColor(Color.WHITE);
+                g2.fill(readInstr);
                 
-                canvas.getGraphics().drawString("GAME OVER", length * snakeSize / 2 - 40, length*snakeSize/2);
-                canvas.getGraphics().drawString("Click ESC to quit...", length * snakeSize / 2 - 53, length*snakeSize/2 + 20);
-                canvas.getGraphics().drawString("Press any other key to play again...", length * snakeSize / 2 - 92, length*snakeSize/2 + 40);
+                g2.drawString("GAME OVER", length * snakeSize / 2 - 40, length*snakeSize/2);
+                g2.drawString("Click ESC to quit...", length * snakeSize / 2 - 53, length*snakeSize/2 + 20);
+                g2.drawString("Press any other key to play again...", length * snakeSize / 2 - 92, length*snakeSize/2 + 40);
                 try {
                     Thread.sleep(100);
                     //System.out.print(" ");
@@ -114,7 +107,6 @@ public class GUI extends Canvas
         keyHandler listener = new keyHandler();
         addKeyListener(listener);
         setFocusable(true);
-        
     }
     
     static Canvas canvas = new GUI();
@@ -138,6 +130,7 @@ public class GUI extends Canvas
         
         for(int i = 0; i < length * length; i++)
             snake[i] = new rect();
+        
         snake[0].rectangle = head;
         snake[0].onScreen = true;
         snake[0].direction = "DOWN";
