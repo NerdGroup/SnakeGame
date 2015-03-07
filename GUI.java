@@ -3,7 +3,9 @@ package snake;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
+
 import javax.swing.JFrame;
+
 import java.util.*;
 
 public class GUI extends Canvas
@@ -24,8 +26,6 @@ public class GUI extends Canvas
     
     
     static Rectangle2D readInstr = new Rectangle2D.Double(120, 210, 210, 60);
-    static boolean changeD = false;
-    static int numOfRectToMove = 0;
     
     public static Thread t = new Thread (new Runnable ()
                                          {
@@ -39,22 +39,13 @@ public class GUI extends Canvas
                 {
                     try
                     {
-                        if(changeD)
-                        {
-                            snake[numOfRectToMove].direction = changeDirection;
-                            numOfRectToMove++;
-                        }
-                        if(numOfRectToMove >= currentLength)
-                        {
-                            changeD = false;
-                            numOfRectToMove = 0;
-                        }
                         for(int i = 0; i < length*length; i++)
                         {
                             if(!snake[i].onScreen)
                                 break;
                             arrowKey(snake[i].direction, canvas.getGraphics(), i);
-                        }
+                            
+                                                    }
                         if (head.getX() == food.getX() && head.getY() == food.getY())
                         {
                             score+= 5;
@@ -77,8 +68,7 @@ public class GUI extends Canvas
                             snake[currentLength-1].direction = snake[currentLength-2].direction;
                             snake[currentLength-1].onScreen = true;
                             
-                            if(changeD)
-                                numOfRectToMove++;
+                            
                             
                         }
                         
@@ -110,6 +100,49 @@ public class GUI extends Canvas
         }
         
     });
+    
+    public static Thread snakeMovement = new Thread (new Runnable ()
+    {
+    	@Override
+    	public void run()
+    	{
+    		while(true)
+            {                
+                while(!gameEnd)
+                {
+                	for(int i = 1; i < currentLength; i++)
+                	{
+                		if(!snake[i].onScreen)
+                			break;
+                		
+	                	if(!snake[i].direction.equals(snake[i-1].direction))
+	                	{
+	                		String dir = snake[i-1].direction;
+	                		try {
+								Thread.sleep(100);
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+	                		snake[i].direction = dir;
+	                	}
+	                	
+	                	
+                	}
+                }
+                
+                try {
+					Thread.sleep(100);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+            }
+    	}
+    });
+    
+    
+    
     public GUI()
     {
         keyHandler listener = new keyHandler();
@@ -143,6 +176,7 @@ public class GUI extends Canvas
         snake[0].onScreen = true;
         snake[0].direction = "DOWN";
         t.start();
+        snakeMovement.start();
     }
     
     
@@ -210,6 +244,7 @@ public class GUI extends Canvas
                 }
                 snake[i].onScreen = false;
                 snake[i].rectangle = null;
+                snake[i].direction = null;
             }
             score = 0;
             currentLength = 1;
@@ -232,31 +267,32 @@ public class GUI extends Canvas
         
         
         canvas.repaint();
+        
+        
     }
-    public class keyHandler implements KeyListener
+    public class keyHandler implements KeyListener 
     {
         @Override
         public void keyPressed(KeyEvent e)
         {
+        	
             if (e.getKeyCode() == KeyEvent.VK_RIGHT )
             {
-                changeDirection = "RIGHT";
-                changeD = true;
+                snake[0].direction = "RIGHT";
             }
             else if (e.getKeyCode() == KeyEvent.VK_LEFT )
             {
-                changeDirection = "LEFT";
-                changeD = true;
+            	snake[0].direction = "LEFT";
             }
             else if (e.getKeyCode() == KeyEvent.VK_UP )
             {
-                changeDirection = "UP";
-                changeD = true;
+            	snake[0].direction = "UP";
+                
             }
             else if (e.getKeyCode() == KeyEvent.VK_DOWN )
             {
-                changeDirection = "DOWN";
-                changeD = true;
+            	snake[0].direction = "DOWN";
+                
             }
             else if(e.getKeyCode() == KeyEvent.VK_ESCAPE)
             {
@@ -267,6 +303,7 @@ public class GUI extends Canvas
                 if(gameEnd)
                     arrowKey("ELSE", e.getComponent().getGraphics(), 0);
             }
+           
         }
         
         @Override
