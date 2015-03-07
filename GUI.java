@@ -3,9 +3,7 @@ package snake;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
-
 import javax.swing.JFrame;
-
 import java.util.*;
 
 public class GUI extends Canvas
@@ -23,7 +21,6 @@ public class GUI extends Canvas
     
     //created class rect, made it all in one array
     static rect snake[] = new rect[length * length];
-    
     
     static Rectangle2D readInstr = new Rectangle2D.Double(120, 210, 210, 60);
     
@@ -45,7 +42,7 @@ public class GUI extends Canvas
                                 break;
                             arrowKey(snake[i].direction, canvas.getGraphics(), i);
                             
-                                                    }
+                        }
                         if (head.getX() == food.getX() && head.getY() == food.getY())
                         {
                             score+= 5;
@@ -125,6 +122,25 @@ public class GUI extends Canvas
 								e.printStackTrace();
 							}
 	                		snake[i].direction = dir;
+	                	
+	                		if(snake[i].direction.equals("UP"))
+	                		{
+	                			snake[i].rectangle.setFrame(snake[i-1].rectangle.getX(), snake[i-1].rectangle.getY() + snakeSize, snakeSize, snakeSize);
+	                		}
+	                		else if(snake[i].direction.equals("DOWN"))
+	                		{
+	                			snake[i].rectangle.setFrame(snake[i-1].rectangle.getX(), snake[i-1].rectangle.getY() - snakeSize, snakeSize, snakeSize);
+	                		}
+	                		else if(snake[i].direction.equals("LEFT"))
+	                		{
+	                			snake[i].rectangle.setFrame(snake[i-1].rectangle.getX() + snakeSize, snake[i-1].rectangle.getY(), snakeSize, snakeSize);
+	                		}
+	                		else if(snake[i].direction.equals("RIGHT"))
+	                		{
+	                			snake[i].rectangle.setFrame(snake[i-1].rectangle.getX() - snakeSize, snake[i-1].rectangle.getY(), snakeSize, snakeSize);
+	                		}
+	                		else
+	                			System.out.println("Bug: String = " + snake[i].direction);
 	                	}
 	                	
 	                	
