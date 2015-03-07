@@ -1,3 +1,5 @@
+package snake;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
@@ -32,9 +34,7 @@ public class GUI extends Canvas
         {
             Graphics2D g2 = ((Graphics2D)canvas.getGraphics());
             while(true)
-            {
-                g2.drawRect(0, 0, length * snakeSize, length * snakeSize + 50);
-                
+            {                
                 while(!gameEnd)
                 {
                     try
@@ -53,25 +53,33 @@ public class GUI extends Canvas
                         {
                             if(!snake[i].onScreen)
                                 break;
-                            if (snake[i].direction.equals(""))
-                                break;
-                            
-                            //System.out.println(snake[i].direction + i);
-                            arrowKey(snake[i].direction, (Graphics)frame.getGraphics(), i);
+                            arrowKey(snake[i].direction, canvas.getGraphics(), i);
                         }
                         if (head.getX() == food.getX() && head.getY() == food.getY())
                         {
                             score+= 5;
                             food.setFrame(rand.nextInt(29)*15, rand.nextInt(29)*15, snakeSize, snakeSize);
-                            canvas.repaint();
-                            snake[currentLength].rectangle = new Rectangle2D.Double(snake[currentLength -1].rectangle.getX(), snake[currentLength -1].rectangle.getY(), snakeSize, snakeSize);
-                            snake[currentLength].direction = snake[currentLength-1].direction;
-                            snake[currentLength].onScreen = true;
-                            
                             
                             currentLength++;
+                            canvas.repaint();
+                            
+                            if(snake[currentLength-2].direction.equals("DOWN"))
+                            	snake[currentLength-1].rectangle = new Rectangle2D.Double(snake[currentLength-2].rectangle.getX(), snake[currentLength-2].rectangle.getY() - snakeSize, snakeSize, snakeSize);
+                            else if(snake[currentLength-2].direction.equals("RIGHT"))
+                            	snake[currentLength-1].rectangle = new Rectangle2D.Double(snake[currentLength-2].rectangle.getX() - snakeSize, snake[currentLength-2].rectangle.getY(), snakeSize, snakeSize);
+                            else if(snake[currentLength-2].direction.equals("LEFT"))
+                            	snake[currentLength-1].rectangle = new Rectangle2D.Double(snake[currentLength-2].rectangle.getX() + snakeSize, snake[currentLength-2].rectangle.getY(), snakeSize, snakeSize);
+                            else if(snake[currentLength-2].direction.equals("UP"))
+                            	snake[currentLength-1].rectangle = new Rectangle2D.Double(snake[currentLength-2].rectangle.getX(), snake[currentLength-2].rectangle.getY() + snakeSize, snakeSize, snakeSize);
+                            else
+                            	System.out.println("ERROR!");
+                            
+                            snake[currentLength-1].direction = snake[currentLength-2].direction;
+                            snake[currentLength-1].onScreen = true;
+                            
                             if(changeD)
                                 numOfRectToMove++;
+                            
                         }
                         
                         if(head.getX() < 0 || head.getY() < 0 || head.getX() >= snakeSize * length || head.getY() >= snakeSize * length)
@@ -88,12 +96,12 @@ public class GUI extends Canvas
                 g2.setColor(Color.WHITE);
                 g2.fill(readInstr);
                 
+                g2.setColor(Color.BLACK);
                 g2.drawString("GAME OVER", length * snakeSize / 2 - 40, length*snakeSize/2);
                 g2.drawString("Click ESC to quit...", length * snakeSize / 2 - 53, length*snakeSize/2 + 20);
                 g2.drawString("Press any other key to play again...", length * snakeSize / 2 - 92, length*snakeSize/2 + 40);
                 try {
                     Thread.sleep(100);
-                    //System.out.print(" ");
                 } catch (InterruptedException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
@@ -144,7 +152,7 @@ public class GUI extends Canvas
         Graphics2D g2 = (Graphics2D) g;
         
         g2.setColor(Color.GREEN);
-        g2.fill(head);
+        //g2.fill(head);
         
         for(int i = 0; i < length*length; i++)
         {
@@ -173,19 +181,19 @@ public class GUI extends Canvas
         
         if(string.equals("RIGHT"))
         {
-            snake[x].rectangle.setFrame(head.getX() + snakeSize, head.getY(), snakeSize, snakeSize);
+            snake[x].rectangle.setFrame(snake[x].rectangle.getX() + snakeSize, snake[x].rectangle.getY(), snakeSize, snakeSize);
         }
         else if(string.equals("LEFT"))
         {
-            snake[x].rectangle.setFrame(head.getX() - snakeSize, head.getY(), snakeSize, snakeSize);
+            snake[x].rectangle.setFrame(snake[x].rectangle.getX() - snakeSize, snake[x].rectangle.getY(), snakeSize, snakeSize);
         }
         else if(string.equals("UP"))
         {
-            snake[x].rectangle.setFrame(head.getX(), head.getY() - snakeSize, snakeSize, snakeSize);
+            snake[x].rectangle.setFrame(snake[x].rectangle.getX(), snake[x].rectangle.getY() - snakeSize, snakeSize, snakeSize);
         }
         else if(string.equals("DOWN"))
         {
-            snake[x].rectangle.setFrame(head.getX(), head.getY() + snakeSize, snakeSize, snakeSize);
+            snake[x].rectangle.setFrame(snake[x].rectangle.getX(), snake[x].rectangle.getY() + snakeSize, snakeSize, snakeSize);
         }
         else if(string.equals("ESC"))
         {
