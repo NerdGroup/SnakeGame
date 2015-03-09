@@ -3,7 +3,9 @@ package snake;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
+
 import javax.swing.JFrame;
+
 import java.util.*;
 
 public class GUI extends Canvas
@@ -123,24 +125,7 @@ public class GUI extends Canvas
 							}
 	                		snake[i].direction = dir;
 	                	
-	                		if(snake[i].direction.equals("UP"))
-	                		{
-	                			snake[i].rectangle.setFrame(snake[i-1].rectangle.getX(), snake[i-1].rectangle.getY() + snakeSize, snakeSize, snakeSize);
-	                		}
-	                		else if(snake[i].direction.equals("DOWN"))
-	                		{
-	                			snake[i].rectangle.setFrame(snake[i-1].rectangle.getX(), snake[i-1].rectangle.getY() - snakeSize, snakeSize, snakeSize);
-	                		}
-	                		else if(snake[i].direction.equals("LEFT"))
-	                		{
-	                			snake[i].rectangle.setFrame(snake[i-1].rectangle.getX() + snakeSize, snake[i-1].rectangle.getY(), snakeSize, snakeSize);
-	                		}
-	                		else if(snake[i].direction.equals("RIGHT"))
-	                		{
-	                			snake[i].rectangle.setFrame(snake[i-1].rectangle.getX() - snakeSize, snake[i-1].rectangle.getY(), snakeSize, snakeSize);
-	                		}
-	                		else
-	                			System.out.println("Bug: String = " + snake[i].direction);
+	                		
 	                	}
 	                	
 	                	
@@ -157,6 +142,56 @@ public class GUI extends Canvas
     	}
     });
     
+    
+    public static Thread snakeMovement2 = new Thread (new Runnable ()
+    {
+    	@Override
+    	public void run()
+    	{
+    		while(true)
+            {                
+                while(!gameEnd)
+                {
+                	for(int i = currentLength; i > 0; i--)
+                	{
+                		if(!snake[i].onScreen)
+                			continue;
+                		if(snake[i].direction.equals("UP"))
+                		{
+                			snake[i].rectangle.setFrame(snake[i-1].rectangle.getX(), snake[i-1].rectangle.getY() + snakeSize, snakeSize, snakeSize);
+                		}
+                		else if(snake[i].direction.equals("DOWN"))
+                		{
+                			snake[i].rectangle.setFrame(snake[i-1].rectangle.getX(), snake[i-1].rectangle.getY() - snakeSize, snakeSize, snakeSize);
+                		}
+                		else if(snake[i].direction.equals("LEFT"))
+                		{
+                			snake[i].rectangle.setFrame(snake[i-1].rectangle.getX() + snakeSize, snake[i-1].rectangle.getY(), snakeSize, snakeSize);
+                		}
+                		else if(snake[i].direction.equals("RIGHT"))
+                		{
+                			snake[i].rectangle.setFrame(snake[i-1].rectangle.getX() - snakeSize, snake[i-1].rectangle.getY(), snakeSize, snakeSize);
+                		}
+                		else
+                			System.out.println("Bug: String = " + snake[i].direction);
+                
+                	}
+                	
+                	try {
+						Thread.sleep(100);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+                }
+                try {
+					Thread.sleep(100);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+                
+            }
+    	}
+    });
     
     
     public GUI()
@@ -193,6 +228,7 @@ public class GUI extends Canvas
         snake[0].direction = "DOWN";
         t.start();
         snakeMovement.start();
+        snakeMovement2.start();
     }
     
     
