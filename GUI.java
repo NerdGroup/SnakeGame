@@ -2,8 +2,15 @@
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import javax.swing.JFrame;
+
 import java.util.*;
 
 public class GUI extends Canvas
@@ -227,7 +234,7 @@ public class GUI extends Canvas
 	{
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		canvas.setSize(length * snakeSize, length * snakeSize);
+		canvas.setSize(length * snakeSize, length * snakeSize +15);
 
 		frame.setPreferredSize(new Dimension(length*snakeSize + 7, length*snakeSize + 50));
 		frame.setMaximumSize(new Dimension(length*snakeSize + 7, length*snakeSize + 50));
@@ -286,6 +293,7 @@ public class GUI extends Canvas
 
 
 		g2.drawString(score + "", length * snakeSize / 2 - 10, length*snakeSize + 15);
+		g2.drawString("High Score :" + prevHigh + "", length * snakeSize / 2 - 10, length*snakeSize + 25);
 	}
 
 
@@ -365,6 +373,7 @@ public class GUI extends Canvas
 			}
 
 			g2.drawString(score + "", length * snakeSize / 2 - 10, length*snakeSize + 15);
+			g2.drawString("High Score :" + prevHigh + "", length * snakeSize / 2 - 10, length*snakeSize + 25);
 		}
 
 
