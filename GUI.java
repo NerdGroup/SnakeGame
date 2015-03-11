@@ -1,10 +1,12 @@
-package snake;
+//package snake;
 
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
 import java.io.*;
+
 import javax.swing.JFrame;
+
 import java.util.*;
 
 public class GUI extends Canvas
@@ -47,7 +49,12 @@ public class GUI extends Canvas
 						{
 							if(!snake[i].onScreen)
 								break;
-							arrowKey(snake[i].direction, canvas.getGraphics(), i);
+							try {
+								arrowKey(snake[i].direction, canvas.getGraphics(), i);
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 						}
 						if (head.getX() == food.getX() && head.getY() == food.getY())
 						{
@@ -83,14 +90,18 @@ public class GUI extends Canvas
 					{
 						System.out.println("Interrupted");
 
-					} catch (FileNotFoundException e) {
-						// TODO Auto-generated catch block
-						
 					}
 				}
 				g2.setColor(Color.WHITE);
 				g2.fill(readInstr);
-
+				
+				try {
+					fw = new FileWriter(highS);
+					fw.write(prevHigh + "");
+					fw.close();
+					fw = null;
+				} catch (IOException e1) {}
+				
 				g2.setColor(Color.BLACK);
 				g2.drawString("GAME OVER", length * snakeSize / 2 - 40, length*snakeSize/2);
 				g2.drawString("Click ESC to quit...", length * snakeSize / 2 - 53, length*snakeSize/2 + 20);
@@ -101,10 +112,7 @@ public class GUI extends Canvas
 				}
 				try {
 					Thread.sleep(100);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					
-				}
+				} catch (InterruptedException e) {}
 			}
 
 		}
@@ -141,10 +149,7 @@ public class GUI extends Canvas
 							String dir = snake[i-1].direction;
 							try {
 								Thread.sleep(100);
-							} catch (InterruptedException e) {
-								// TODO Auto-generated catch block
-								
-							}
+							} catch (InterruptedException e) {}
 							snake[i].direction = dir;
 
 
@@ -156,10 +161,7 @@ public class GUI extends Canvas
 
 				try {
 					Thread.sleep(100);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					
-				}
+				} catch (InterruptedException e) {}
 			}
 		}
 	});
@@ -225,10 +227,7 @@ public class GUI extends Canvas
 		try {
 			fr = new FileReader(highS);
 			br = new BufferedReader(fr);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			
-		}
+		} catch (FileNotFoundException e) {}
 
 
 	}
@@ -266,10 +265,7 @@ public class GUI extends Canvas
 		{
 			try {
 				prevHigh = Integer.parseInt(br.readLine());
-			} catch (NumberFormatException | IOException e) {
-				// TODO Auto-generated catch block
-				
-			}
+			} catch (NumberFormatException | IOException e) {}
 		}
 	}
 
@@ -304,7 +300,7 @@ public class GUI extends Canvas
 	}
 
 
-	public static void arrowKey(String string, Graphics g, int x) throws FileNotFoundException
+	public static void arrowKey(String string, Graphics g, int x) throws FileNotFoundException, IOException
 	{
 		Graphics2D g2 = (Graphics2D) g;
 
@@ -326,28 +322,6 @@ public class GUI extends Canvas
 		}
 		else if(string.equals("ESC"))
 		{
-			
-
-			try {
-				fw = new FileWriter(highS);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				
-			}
-			try {
-				fw.write(prevHigh + "");
-				
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				
-			}
-			try {
-				fw.close();
-				
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				
-			}
 			System.exit(0);
 		}
 		else
@@ -416,9 +390,9 @@ public class GUI extends Canvas
 			{
 				try {
 					arrowKey("ESC", e.getComponent().getGraphics(), 0);
-				} catch (FileNotFoundException e1) {
-					// TODO Auto-generated catch block
-					
+				}
+				catch (IOException e1) {
+					e1.printStackTrace();
 				}
 			}
 			else
@@ -426,10 +400,7 @@ public class GUI extends Canvas
 				if(gameEnd)
 					try {
 						arrowKey("ELSE", e.getComponent().getGraphics(), 0);
-					} catch (FileNotFoundException e1) {
-						// TODO Auto-generated catch block
-						
-					}
+					} catch (IOException e1) {}
 			}
 
 		}
