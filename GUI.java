@@ -2,8 +2,15 @@
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import javax.swing.JFrame;
+
 import java.util.*;
 
 public class GUI extends Canvas
@@ -84,7 +91,7 @@ public class GUI extends Canvas
 
 					} catch (FileNotFoundException e) {
 						// TODO Auto-generated catch block
-						e.printStackTrace();
+						
 					}
 				}
 				g2.setColor(Color.WHITE);
@@ -102,7 +109,7 @@ public class GUI extends Canvas
 					Thread.sleep(100);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					
 				}
 			}
 
@@ -130,7 +137,7 @@ public class GUI extends Canvas
 								Thread.sleep(100);
 							} catch (InterruptedException e) {
 								// TODO Auto-generated catch block
-								e.printStackTrace();
+								
 							}
 							snake[i].direction = dir;
 
@@ -145,7 +152,7 @@ public class GUI extends Canvas
 					Thread.sleep(100);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					
 				}
 			}
 		}
@@ -189,13 +196,13 @@ public class GUI extends Canvas
 					try {
 						Thread.sleep(100);
 					} catch (InterruptedException e) {
-						e.printStackTrace();
+						
 					}
 				}
 				try {
 					Thread.sleep(100);
 				} catch (InterruptedException e) {
-					e.printStackTrace();
+					
 				}
 
 			}
@@ -214,7 +221,7 @@ public class GUI extends Canvas
 			br = new BufferedReader(fr);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
 		}
 
 
@@ -254,7 +261,7 @@ public class GUI extends Canvas
 				prevHigh = Integer.parseInt(br.readLine());
 			} catch (NumberFormatException | IOException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				
 			}
 		}
 	}
@@ -317,21 +324,21 @@ public class GUI extends Canvas
 				fw = new FileWriter(highS);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				
 			}
 			try {
 				fw.write(prevHigh + "");
 				
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				
 			}
 			try {
 				fw.close();
 				
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				
 			}
 			System.exit(0);
 		}
@@ -402,7 +409,7 @@ public class GUI extends Canvas
 					arrowKey("ESC", e.getComponent().getGraphics(), 0);
 				} catch (FileNotFoundException e1) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					
 				}
 			}
 			else
@@ -412,7 +419,7 @@ public class GUI extends Canvas
 						arrowKey("ELSE", e.getComponent().getGraphics(), 0);
 					} catch (FileNotFoundException e1) {
 						// TODO Auto-generated catch block
-						e1.printStackTrace();
+						
 					}
 			}
 
