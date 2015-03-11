@@ -2,12 +2,7 @@
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 
 import javax.swing.JFrame;
 
@@ -305,8 +300,8 @@ public class GUI extends Canvas
 		}
 
 
-		g2.drawString(score + "", length * snakeSize / 9, length*snakeSize + 15);
-		g2.drawString("High Score :" + prevHigh + "", length * snakeSize /3, length*snakeSize + 15);
+		g2.drawString("Current Score: " + score + "", length * snakeSize / 3, length*snakeSize + 15);
+		g2.drawString("High Score :" + prevHigh + "", length * snakeSize /9, length*snakeSize + 15);
 	}
 
 
