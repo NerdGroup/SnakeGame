@@ -2,7 +2,12 @@
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
 import javax.swing.JFrame;
 
@@ -96,6 +101,10 @@ public class GUI extends Canvas
 				g2.drawString("GAME OVER", length * snakeSize / 2 - 40, length*snakeSize/2);
 				g2.drawString("Click ESC to quit...", length * snakeSize / 2 - 53, length*snakeSize/2 + 20);
 				g2.drawString("Press any other key to play again...", length * snakeSize / 2 - 92, length*snakeSize/2 + 40);
+				if (score > prevHigh)
+				{
+					prevHigh = score;
+				}
 				try {
 					Thread.sleep(100);
 				} catch (InterruptedException e) {
@@ -319,18 +328,18 @@ public class GUI extends Canvas
 			}
 			try {
 				fw.write(prevHigh + "");
-				prevHigh = score;
+				
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			try {
 				fw.close();
+				
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
 			System.exit(0);
 		}
 		else
@@ -345,10 +354,6 @@ public class GUI extends Canvas
 				snake[i].onScreen = false;
 				snake[i].rectangle = null;
 				snake[i].direction = null;
-			}
-			if (score > prevHigh)
-			{
-				prevHigh = score;
 			}
 			score = 0;
 			currentLength = 1;
