@@ -1,10 +1,16 @@
-package snake;
 
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
-import java.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import javax.swing.JFrame;
+
 import java.util.*;
 
 public class GUI extends Canvas
@@ -109,7 +115,19 @@ public class GUI extends Canvas
 
 		}
 	});
-
+	public static Thread updateHigh = new Thread (new Runnable()
+	{
+		public void run ()
+		{
+			while (true)
+			{
+				if (score > prevHigh)
+				{
+					prevHigh = score;
+				}
+			}
+		}
+	});
 	public static Thread snakeMovement = new Thread (new Runnable ()
 	{
 		@Override
@@ -249,6 +267,7 @@ public class GUI extends Canvas
 		t.start();
 		snakeMovement.start();
 		snakeMovement2.start();
+		updateHigh.start();
 		if (highS.exists())
 		{
 			try {
@@ -286,8 +305,8 @@ public class GUI extends Canvas
 		}
 
 
-		g2.drawString("Current Score: " + score + "", length * snakeSize / 9, length*snakeSize + 15);
-		g2.drawString("High Score :" + prevHigh + "", length * snakeSize / 3 * 2, length*snakeSize + 15);
+		g2.drawString(score + "", length * snakeSize / 2 - 10, length*snakeSize + 15);
+		g2.drawString("High Score :" + prevHigh + "", length * snakeSize / 2 - 10, length*snakeSize + 25);
 	}
 
 
