@@ -1,11 +1,10 @@
+package snake;
 
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
 import java.io.*;
-
 import javax.swing.JFrame;
-
 import java.util.*;
 
 public class GUI extends Canvas
@@ -300,8 +299,8 @@ public class GUI extends Canvas
 		}
 
 
-		g2.drawString("Current Score: " + score + "", length * snakeSize / 3, length*snakeSize + 15);
-		g2.drawString("High Score :" + prevHigh + "", length * snakeSize /9, length*snakeSize + 15);
+		g2.drawString("Current Score: " + score + "", length * snakeSize / 9, length*snakeSize + 15);
+		g2.drawString("High Score :" + prevHigh + "", length * snakeSize /3 * 2, length*snakeSize + 15);
 	}
 
 
