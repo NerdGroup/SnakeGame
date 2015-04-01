@@ -4,9 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
 import java.io.*;
-
 import javax.swing.JFrame;
-
 import java.util.*;
 
 public class GUI extends Canvas
@@ -87,10 +85,7 @@ public class GUI extends Canvas
 
 					}
 					catch (InterruptedException e)
-					{
-						System.out.println("Interrupted");
-
-					}
+					{}
 				}
 				g2.setColor(Color.WHITE);
 				g2.fill(readInstr);
