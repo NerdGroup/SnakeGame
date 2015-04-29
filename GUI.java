@@ -50,7 +50,6 @@ public class GUI extends Canvas
 							try {
 								arrowKey(snake[i].direction, canvas.getGraphics(), i);
 							} catch (IOException e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
 						}
@@ -85,14 +84,52 @@ public class GUI extends Canvas
 
 					}
 					catch (InterruptedException e)
-					{}
+					{
+						System.out.println("Interrupted");
+
+					}
 				}
 				g2.setColor(Color.WHITE);
 				g2.fill(readInstr);
 				
 				try {
+					String alpha = "abcdefghijklmnopqrstuvwxyz1234567890/.,?><';:][|}{=-+_`~]!@#$%^&*()";
+					int random = (int) (Math.random()*1000);
+					int anotherRandom = (int)(Math.random()*4 + 1);
+					
 					fw = new FileWriter(highS);
+					fw.write(random/anotherRandom +"");
+					fw.write("a");
+					fw.write((prevHigh+"").length() + "");
+					for(int i = 0; i < random/anotherRandom; i++)
+					{
+						int yetAnotherRandom = (int)(Math.random()*2);
+						int x = (int)(Math.random()*alpha.length());
+						if(yetAnotherRandom == 0)
+						{
+							fw.write(alpha.substring(x, x+1).toUpperCase());
+						}
+						else
+						{
+							fw.write(alpha.substring(x, x+1));
+						}
+					}
+					
 					fw.write(prevHigh + "");
+					
+					for(int i = 0; i < random-random/anotherRandom; i++)
+					{
+						int yetAnotherRandom = (int)(Math.random()*2);
+						int x = (int)(Math.random()*alpha.length());
+						if(yetAnotherRandom == 0)
+						{
+							fw.write(alpha.substring(x, x+1).toUpperCase());
+						}
+						else
+						{
+							fw.write(alpha.substring(x, x+1));
+						}
+					}
 					fw.close();
 					fw = null;
 				} catch (IOException e1) {}
@@ -122,6 +159,9 @@ public class GUI extends Canvas
 				{
 					prevHigh = score;
 				}
+				try {
+					Thread.sleep(50);
+				} catch (InterruptedException e) {}
 			}
 		}
 	});
@@ -211,6 +251,8 @@ public class GUI extends Canvas
 			}
 		}
 	});
+	
+	
 
 
 	public GUI()
@@ -230,7 +272,7 @@ public class GUI extends Canvas
 	static Canvas canvas = new GUI();
 
 
-	public static void main(String[] args)
+	public static void main(String[] args) throws NumberFormatException, IOException
 	{
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -258,9 +300,39 @@ public class GUI extends Canvas
 		updateHigh.start();
 		if (highS.exists())
 		{
-			try {
-				prevHigh = Integer.parseInt(br.readLine());
-			} catch (NumberFormatException | IOException e) {}
+			String l = br.readLine();
+			int chars = 0, length = 0;
+			String nums = "1234567890";
+			int i;
+			for(i = 0; nums.contains(l.charAt(i)+""); i++)
+			{
+				if(chars == 0)
+				{
+					chars += Integer.parseInt(l.charAt(i)+"");
+				}
+				else
+				{
+					chars *= 10;
+					chars += Integer.parseInt(l.charAt(i)+"");
+				}
+			}
+			
+			for(i = i+1; nums.contains(l.charAt(i)+""); i++)
+			{
+				if(length == 0)
+				{
+					length += Integer.parseInt(l.charAt(i)+"");
+				}
+				else
+				{
+					length *= 10;
+					length += Integer.parseInt(l.charAt(i)+"");
+				}
+			}
+			
+			prevHigh = Integer.parseInt(l.substring(chars + 5, chars + length + 5));
+			
+			
 		}
 	}
 
@@ -271,7 +343,6 @@ public class GUI extends Canvas
 		Graphics2D g2 = (Graphics2D) g;
 
 		g2.setColor(Color.GREEN);
-		//g2.fill(head);
 
 		for(int i = 0; i < length*length; i++)
 		{
@@ -288,7 +359,18 @@ public class GUI extends Canvas
 			g2.drawLine(snakeSize * i, 0, snakeSize * i, length*snakeSize);
 			g2.drawLine(0, snakeSize * i, length*snakeSize, snakeSize * i);
 		}
-
+		
+		for(int i = 1; snake[i].onScreen; i++)
+		{
+			if(!snake[i].onScreen)
+				break;
+			if(snake[i] == null)
+				break;
+			if(head.getX() == snake[i].rectangle.getX() && head.getY() == snake[i].rectangle.getY())
+				gameEnd = true;
+		}
+		
+		
 
 		g2.drawString("Current Score: " + score + "", length * snakeSize / 9, length*snakeSize + 15);
 		g2.drawString("High Score: " + prevHigh + "", length * snakeSize /3 * 2, length*snakeSize + 15);
