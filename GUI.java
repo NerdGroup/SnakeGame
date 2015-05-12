@@ -233,20 +233,20 @@ public class GUI extends Canvas
 						{
 							snake[i].rectangle.setFrame(snake[i-1].rectangle.getX(), snake[i-1].rectangle.getY() + snakeSize, snakeSize, snakeSize);
 						}
-						else if(snake[i].direction.equals("DOWN"))
+						if(snake[i].direction.equals("DOWN"))
 						{
 							snake[i].rectangle.setFrame(snake[i-1].rectangle.getX(), snake[i-1].rectangle.getY() - snakeSize, snakeSize, snakeSize);
 						}
-						else if(snake[i].direction.equals("LEFT"))
+						if(snake[i].direction.equals("LEFT"))
 						{
 							snake[i].rectangle.setFrame(snake[i-1].rectangle.getX() + snakeSize, snake[i-1].rectangle.getY(), snakeSize, snakeSize);
 						}
-						else if(snake[i].direction.equals("RIGHT"))
+						if(snake[i].direction.equals("RIGHT"))
 						{
 							snake[i].rectangle.setFrame(snake[i-1].rectangle.getX() - snakeSize, snake[i-1].rectangle.getY(), snakeSize, snakeSize);
 						}
-						else
-							System.out.println("Bug: String = " + snake[i].direction);
+						//else
+							//System.out.println("Bug: String = " + snake[i].direction);
 
 					}
 
@@ -461,20 +461,20 @@ public class GUI extends Canvas
 		public void keyPressed(KeyEvent e)
 		{
 
-			if (e.getKeyCode() == KeyEvent.VK_RIGHT )
+			if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D)
 			{
 				snake[0].direction = "RIGHT";
 			}
-			else if (e.getKeyCode() == KeyEvent.VK_LEFT )
+			else if (e.getKeyCode() == KeyEvent.VK_LEFT|| e.getKeyCode() == KeyEvent.VK_A )
 			{
 				snake[0].direction = "LEFT";
 			}
-			else if (e.getKeyCode() == KeyEvent.VK_UP )
+			else if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W)
 			{
 				snake[0].direction = "UP";
 
 			}
-			else if (e.getKeyCode() == KeyEvent.VK_DOWN )
+			else if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S)
 			{
 				snake[0].direction = "DOWN";
 
