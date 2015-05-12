@@ -31,6 +31,8 @@ public class GUI extends Canvas
 
 	static Rectangle2D readInstr = new Rectangle2D.Double(120, 210, 210, 60);
 	static boolean firstGame = false;
+	
+	
 	public static Thread t = new Thread (new Runnable ()
 	{
 		@Override
@@ -56,7 +58,17 @@ public class GUI extends Canvas
 						if (head.getX() == food.getX() && head.getY() == food.getY())
 						{
 							score+= 5;
-							food.setFrame(rand.nextInt(29)*15, rand.nextInt(29)*15, snakeSize, snakeSize);
+							boolean checks = false;
+							while(!checks)
+							{
+								checks = true;
+								food.setFrame(rand.nextInt(29)*15, rand.nextInt(29)*15, snakeSize, snakeSize);
+								for(int i = 0; i < currentLength; i++)
+								{
+									if(food.getX() == snake[i].rectangle.getX() && food.getY() == snake[i].rectangle.getY())
+									checks = false;	
+								}
+							}
 							currentLength++;
 							canvas.repaint();
 
@@ -149,6 +161,8 @@ public class GUI extends Canvas
 
 		}
 	});
+	
+	
 	public static Thread updateHigh = new Thread (new Runnable()
 	{
 		public void run ()
@@ -165,6 +179,9 @@ public class GUI extends Canvas
 			}
 		}
 	});
+	
+	
+	
 	public static Thread snakeMovement = new Thread (new Runnable ()
 	{
 		@Override
@@ -186,21 +203,18 @@ public class GUI extends Canvas
 								Thread.sleep(100);
 							} catch (InterruptedException e) {}
 							snake[i].direction = dir;
-
-
 						}
-
-
 					}
 				}
 
 				try {
-					Thread.sleep(100);
+					Thread.sleep(1000);
 				} catch (InterruptedException e) {}
 			}
 		}
 	});
 
+	
 
 	public static Thread snakeMovement2 = new Thread (new Runnable ()
 	{
@@ -247,7 +261,6 @@ public class GUI extends Canvas
 				} catch (InterruptedException e) {
 					
 				}
-
 			}
 		}
 	});
@@ -265,13 +278,12 @@ public class GUI extends Canvas
 			fr = new FileReader(highS);
 			br = new BufferedReader(fr);
 		} catch (FileNotFoundException e) {}
-
-
 	}
 
 	static Canvas canvas = new GUI();
 
 
+	
 	public static void main(String[] args) throws NumberFormatException, IOException
 	{
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -330,16 +342,15 @@ public class GUI extends Canvas
 				}
 			}
 			
-			prevHigh = Integer.parseInt(l.substring(chars + 5, chars + length + 5));
-			
-			
+			prevHigh = Integer.parseInt(l.substring(chars + 5, chars + length + 5));			
 		}
 	}
+	
+	
 
-
-
-	public void paint (Graphics g)
+	public void paint(Graphics g)
 	{
+		//super.paint(g);
 		Graphics2D g2 = (Graphics2D) g;
 
 		g2.setColor(Color.GREEN);
@@ -374,9 +385,11 @@ public class GUI extends Canvas
 
 		g2.drawString("Current Score: " + score + "", length * snakeSize / 9, length*snakeSize + 15);
 		g2.drawString("High Score: " + prevHigh + "", length * snakeSize /3 * 2, length*snakeSize + 15);
+	
 	}
 
 
+	
 	public static void arrowKey(String string, Graphics g, int x) throws FileNotFoundException, IOException
 	{
 		Graphics2D g2 = (Graphics2D) g;
@@ -439,6 +452,9 @@ public class GUI extends Canvas
 
 
 	}
+	
+	
+	
 	public class keyHandler implements KeyListener  
 	{
 		@Override
