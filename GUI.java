@@ -105,43 +105,43 @@ public class GUI extends Canvas
 				g2.fill(readInstr);
 				
 				try {
-					String alpha = "abcdefghijklmnopqrstuvwxyz1234567890/.,?><';:][|}{=-+_`~]!@#$%^&*()";
-					int random = (int) (Math.random()*1000);
-					int anotherRandom = (int)(Math.random()*4 + 1);
+//					String alpha = "abcdefghijklmnopqrstuvwxyz1234567890/.,?><';:][|}{=-+_`~]!@#$%^&*()";
+//					int random = (int) (Math.random()*1000);
+//					int anotherRandom = (int)(Math.random()*4 + 1);
 					
 					fw = new FileWriter(highS);
-					fw.write(random/anotherRandom +"");
-					fw.write("a");
-					fw.write((prevHigh+"").length() + "");
-					for(int i = 0; i < random/anotherRandom; i++)
-					{
-						int yetAnotherRandom = (int)(Math.random()*2);
-						int x = (int)(Math.random()*alpha.length());
-						if(yetAnotherRandom == 0)
-						{
-							fw.write(alpha.substring(x, x+1).toUpperCase());
-						}
-						else
-						{
-							fw.write(alpha.substring(x, x+1));
-						}
-					}
+//					fw.write(random/anotherRandom +"");
+//					fw.write("a");
+					fw.write((prevHigh+""));
+//					for(int i = 0; i < random/anotherRandom; i++)
+//					{
+//						int yetAnotherRandom = (int)(Math.random()*2);
+//						int x = (int)(Math.random()*alpha.length());
+//						if(yetAnotherRandom == 0)
+//						{
+//							fw.write(alpha.substring(x, x+1).toUpperCase());
+//						}
+//						else
+//						{
+//							fw.write(alpha.substring(x, x+1));
+//						}
+//					}
 					
-					fw.write(prevHigh + "");
+//					fw.write(prevHigh + "");
 					
-					for(int i = 0; i < random-random/anotherRandom; i++)
-					{
-						int yetAnotherRandom = (int)(Math.random()*2);
-						int x = (int)(Math.random()*alpha.length());
-						if(yetAnotherRandom == 0)
-						{
-							fw.write(alpha.substring(x, x+1).toUpperCase());
-						}
-						else
-						{
-							fw.write(alpha.substring(x, x+1));
-						}
-					}
+//					for(int i = 0; i < random-random/anotherRandom; i++)
+//					{
+//						int yetAnotherRandom = (int)(Math.random()*2);
+//						int x = (int)(Math.random()*alpha.length());
+//						if(yetAnotherRandom == 0)
+//						{
+//							fw.write(alpha.substring(x, x+1).toUpperCase());
+//						}
+//						else
+//						{
+//							fw.write(alpha.substring(x, x+1));
+//						}
+//					}
 					fw.close();
 					fw = null;
 				} catch (IOException e1) {}
@@ -313,36 +313,36 @@ public class GUI extends Canvas
 		if (highS.exists())
 		{
 			String l = br.readLine();
-			int chars = 0, length = 0;
-			String nums = "1234567890";
-			int i;
-			for(i = 0; nums.contains(l.charAt(i)+""); i++)
-			{
-				if(chars == 0)
-				{
-					chars += Integer.parseInt(l.charAt(i)+"");
-				}
-				else
-				{
-					chars *= 10;
-					chars += Integer.parseInt(l.charAt(i)+"");
-				}
-			}
+//			int chars = 0, length = 0;
+//			String nums = "1234567890";
+//			int i;
+//			for(i = 0; nums.contains(l.charAt(i)+""); i++)
+//			{
+//				if(chars == 0)
+//				{
+//					chars += Integer.parseInt(l.charAt(i)+"");
+//				}
+//				else
+//				{
+//					chars *= 10;
+//					chars += Integer.parseInt(l.charAt(i)+"");
+//				}
+//			}
+//			
+//			for(i = i+1; nums.contains(l.charAt(i)+""); i++)
+//			{
+//				if(length == 0)
+//				{
+//					length += Integer.parseInt(l.charAt(i)+"");
+//				}
+//				else
+//				{
+//					length *= 10;
+//					length += Integer.parseInt(l.charAt(i)+"");
+//				}
+//			}
 			
-			for(i = i+1; nums.contains(l.charAt(i)+""); i++)
-			{
-				if(length == 0)
-				{
-					length += Integer.parseInt(l.charAt(i)+"");
-				}
-				else
-				{
-					length *= 10;
-					length += Integer.parseInt(l.charAt(i)+"");
-				}
-			}
-			
-			prevHigh = Integer.parseInt(l.substring(chars + 5, chars + length + 5));			
+			prevHigh = Integer.parseInt(l);			
 		}
 	}
 	
