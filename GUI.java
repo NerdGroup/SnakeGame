@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
 import java.io.*;
-import javax.swing.JFrame;
+import javax.swing.*;
 import java.util.*;
 
 public class GUI extends Canvas
@@ -286,6 +286,41 @@ public class GUI extends Canvas
 	
 	public static void main(String[] args) throws NumberFormatException, IOException
 	{
+		//JFrame threetwoone
+		///for not too fast starting purposes
+		
+		
+		JFrame start = new JFrame("Welcome!");
+		start.setVisible(true);
+		start.setSize(600, 600);
+		start.setResizable(false);
+		
+		start.getContentPane().setLayout(new GridLayout(3, 1));
+		JLabel welcomeText = new JLabel("WELCOME!!!");
+		welcomeText.setFont(new Font("Serif", Font.BOLD, 66));
+		welcomeText.setForeground(Color.green);
+		welcomeText.setHorizontalAlignment(WIDTH/2);
+		start.add(welcomeText);
+		
+		JButton buttonStart = new JButton("Play Game");
+		buttonStart.setFont(new Font("Serif", Font.CENTER_BASELINE, 66));
+		buttonStart.addActionListener(new ActionListener() {
+	         @Override
+	         public void actionPerformed(ActionEvent e) {
+	        	 start.setVisible(false);
+	        	 frame.setVisible(true);
+	        	t.start();
+	        	snakeMovement.start();
+	        	snakeMovement2.start();
+	        	updateHigh.start();
+			}
+	    });
+		
+		start.add(buttonStart);
+		
+		
+		
+		//game
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		canvas.setSize(length * snakeSize, length * snakeSize +15);
@@ -298,7 +333,7 @@ public class GUI extends Canvas
 		frame.setSize(length*snakeSize + 7, length*snakeSize + 50);
 		frame.getContentPane().add(canvas);
 		frame.pack();
-		frame.setVisible(true);
+		frame.setVisible(false);
 
 		for(int i = 0; i < length * length; i++)
 			snake[i] = new rect();
@@ -306,10 +341,6 @@ public class GUI extends Canvas
 		snake[0].rectangle = head;
 		snake[0].onScreen = true;
 		snake[0].direction = "DOWN";
-		t.start();
-		snakeMovement.start();
-		snakeMovement2.start();
-		updateHigh.start();
 		if (highS.exists())
 		{
 			String l = br.readLine();
