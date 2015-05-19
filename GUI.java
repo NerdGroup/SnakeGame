@@ -1,10 +1,12 @@
-//package snake;
+package snake;
 
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
 import java.io.*;
+
 import javax.swing.*;
+
 import java.util.*;
 
 public class GUI extends Canvas
@@ -25,6 +27,7 @@ public class GUI extends Canvas
 	static Rectangle2D head = new Rectangle2D.Double(60, 60, snakeSize, snakeSize);
 	static Ellipse2D food = new Ellipse2D.Double(rand.nextInt(29)*15, rand.nextInt(29)*15, snakeSize, snakeSize);
 	static int prevHigh;
+	static boolean newHigh = false;
 
 	//created class rect, made it all in one array
 	static rect snake[] = new rect[length * length];
@@ -147,12 +150,19 @@ public class GUI extends Canvas
 				} catch (IOException e1) {}
 				
 				g2.setColor(Color.BLACK);
-				g2.drawString("GAME OVER", length * snakeSize / 2 - 40, length*snakeSize/2);
+				if(!newHigh)
+					g2.drawString("GAME OVER", length * snakeSize / 2 - 40, length*snakeSize/2);
+				else
+				{
+					g2.drawString("NEW HIGH SCORE!", length * snakeSize / 2 - 60, length*snakeSize/2);
+					newHigh = false;
+				}
 				g2.drawString("Click ESC to quit...", length * snakeSize / 2 - 53, length*snakeSize/2 + 20);
 				g2.drawString("Press any other key to play again...", length * snakeSize / 2 - 92, length*snakeSize/2 + 40);
 				if (score > prevHigh)
 				{
 					prevHigh = score;
+					newHigh = true;
 				}
 				try {
 					Thread.sleep(100);
@@ -172,6 +182,7 @@ public class GUI extends Canvas
 				if (score > prevHigh)
 				{
 					prevHigh = score;
+					newHigh = true;
 				}
 				try {
 					Thread.sleep(50);
@@ -285,12 +296,9 @@ public class GUI extends Canvas
 
 	
 	public static void main(String[] args) throws NumberFormatException, IOException
-	{
-		//JFrame threetwoone
-		///for not too fast starting purposes
-		
-		
-		JFrame start = new JFrame("Welcome!");
+	{		
+		JFrame start = new JFrame("Final Project!!!");
+		start.getContentPane().setBackground(Color.green);
 		start.setVisible(true);
 		start.setSize(600, 600);
 		start.setResizable(false);
@@ -298,25 +306,16 @@ public class GUI extends Canvas
 		start.getContentPane().setLayout(new GridLayout(3, 1));
 		JLabel welcomeText = new JLabel("WELCOME!!!");
 		welcomeText.setFont(new Font("Serif", Font.BOLD, 66));
-		welcomeText.setForeground(Color.green);
+		welcomeText.setForeground(Color.red);
+		welcomeText.setBackground(Color.green);
 		welcomeText.setHorizontalAlignment(WIDTH/2);
 		start.add(welcomeText);
 		
 		JButton buttonStart = new JButton("Play Game");
 		buttonStart.setFont(new Font("Serif", Font.CENTER_BASELINE, 66));
-		buttonStart.addActionListener(new ActionListener() {
-	         @Override
-	         public void actionPerformed(ActionEvent e) {
-	        	 start.setVisible(false);
-	        	 frame.setVisible(true);
-	        	t.start();
-	        	snakeMovement.start();
-	        	snakeMovement2.start();
-	        	updateHigh.start();
-			}
-	    });
 		
 		start.add(buttonStart);
+		start.add(new JLabel());
 		
 		
 		
@@ -373,7 +372,42 @@ public class GUI extends Canvas
 //				}
 //			}
 			
-			prevHigh = Integer.parseInt(l);			
+			prevHigh = Integer.parseInt(l);		
+			
+			buttonStart.addActionListener(new ActionListener() {
+		         @Override
+		         public void actionPerformed(ActionEvent e) {
+		        	 start.setVisible(false);
+		        	 frame.setVisible(true);
+
+		     		Graphics g = canvas.getGraphics();
+		        	 
+		        	 for(int i = 3; i > 0; i--)
+		        	 {
+		        		 g.setColor(Color.white);
+		        		 g.setFont(new Font("Serif", Font.CENTER_BASELINE, 66));
+		        		 g.fillRect(0, 0, frame.getWidth(), frame.getHeight());
+		        		 g.setColor(Color.black);
+		        		 g.drawString(i+"", (length*snakeSize + 7)/2 - 15, (length*snakeSize + 50)/2);
+		        		 try {Thread.sleep(1000);} catch (InterruptedException e1) {}
+		        	 }
+		        	 g.setColor(Color.white);
+	        		 g.fillRect(0, 0, frame.getWidth(), frame.getHeight());
+	        		 g.setColor(Color.black);
+		        	 g.drawString("GO!", (length*snakeSize + 7)/2 - 60, (length*snakeSize + 50)/2);
+		        	 try {Thread.sleep(1000);} catch (InterruptedException e1) {}
+		        	 
+		        	 g.setColor(Color.white);
+	        		 g.fillRect(0, 0, frame.getWidth(), frame.getHeight());
+		        	 
+		        	 
+		        	 
+		        	t.start();
+		        	snakeMovement.start();
+		        	snakeMovement2.start();
+		        	updateHigh.start();
+				}
+		    });
 		}
 	}
 	
