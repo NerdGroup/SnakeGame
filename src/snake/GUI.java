@@ -13,7 +13,6 @@ public class GUI extends Canvas
 {
 	FileReader fr;
 	static BufferedReader br;
-	// Saket says hi
 	static File highS = new File("high.txt");
 	static FileWriter fw;
 	static JFrame frame = new JFrame("Snake Game!");
