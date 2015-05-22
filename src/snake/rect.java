@@ -1,4 +1,3 @@
-//New class for creating Rectangles!
 package snake;
 
 import java.awt.geom.Rectangle2D;
