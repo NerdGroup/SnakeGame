@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
 import java.io.*;
-//Hi
+
 import javax.swing.*;
 
 import java.util.*;
@@ -408,9 +408,6 @@ public class GUI extends Canvas
 						{
 							snake[i].rectangle.setFrame(snake[i-1].rectangle.getX() - snakeSize, snake[i-1].rectangle.getY(), snakeSize, snakeSize);
 						}
-						//else
-							//System.out.println("Bug: String = " + snake[i].direction);
-
 					}
 
 					try {
@@ -428,8 +425,6 @@ public class GUI extends Canvas
 		}
 	});
 	
-	
-
 
 	public GUI()
 	{
@@ -446,14 +441,8 @@ public class GUI extends Canvas
 	static Canvas canvas = new GUI();
 
 
-	
-	
-	
-	
-
 	public void paint(Graphics g)
 	{
-		//super.paint(g);
 		Graphics2D g2 = (Graphics2D) g;
 
 		g2.setColor(Color.GREEN);
@@ -549,14 +538,8 @@ public class GUI extends Canvas
 			g2.drawString("CurrentScore: " + score + "", length * snakeSize / 2 - 10, length*snakeSize + 15);
 			g2.drawString("High Score: " + prevHigh + "", length * snakeSize / 2 - 10, length*snakeSize + 25);
 		}
-
-
 		canvas.repaint();
-
-
 	}
-	
-	
 	
 	public class keyHandler implements KeyListener  
 	{
