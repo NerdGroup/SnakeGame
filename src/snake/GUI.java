@@ -6,7 +6,7 @@ import java.awt.geom.*;
 import java.io.*;
 
 import javax.swing.*;
-
+//Eclipse Test
 import java.util.*;
 
 public class GUI extends Canvas
