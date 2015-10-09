@@ -1,13 +1,29 @@
-package snake;
-
-import java.awt.*;
-import java.awt.event.*;
-import java.awt.geom.*;
-import java.io.*;
-
-import javax.swing.*;
+import java.awt.Canvas;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 //Eclipse Test
-import java.util.*;
+import java.util.Random;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 public class GUI extends Canvas
 {
@@ -30,11 +46,11 @@ public class GUI extends Canvas
 	static boolean newHigh = false;
 
 	//created class rect, made it all in one array
-	static rect snake[] = new rect[length * length];
+	static Rectangle snake[] = new Rectangle[length * length];
 
 	static Rectangle2D readInstr = new Rectangle2D.Double(120, 210, 210, 60);
 	static boolean firstGame = false;
-	
+
 	public static void main(String[] args) throws NumberFormatException, IOException
 	{		
 		JFrame start = new JFrame("Final Project!!!");
@@ -43,7 +59,7 @@ public class GUI extends Canvas
 		start.setSize(600, 600);
 		start.setResizable(false);
 		start.getContentPane().setLayout(new GridLayout(3, 1));
-		
+
 		JPanel pane = new JPanel();
 		pane.setSize(start.getWidth()*2/3, start.getHeight()*2/3);
 		pane.setLocation(0, start.getHeight()/3);
@@ -53,25 +69,25 @@ public class GUI extends Canvas
 		welcomeText.setForeground(Color.red);
 		welcomeText.setBackground(Color.green);
 		welcomeText.setHorizontalAlignment(WIDTH/2);
-		
-		
+
+
 		JButton buttonStart = new JButton("Play Game");
 		buttonStart.setFont(new Font("Serif", Font.CENTER_BASELINE, 66));
 		JButton buttonReset = new JButton("Reset High Score");
 		buttonReset.setFont(new Font("Serif", Font.CENTER_BASELINE, 66));
-		
+
 		JLabel labelDone = new JLabel();
 		labelDone.setFont(new Font("Serif", Font.CENTER_BASELINE, 60));
 		labelDone.setForeground(Color.red);
-		
+
 		start.add(welcomeText);
 		start.add(pane);
 		pane.add(buttonStart);
 		pane.add(buttonReset);
 		start.add(labelDone);
-		
-		
-		
+
+
+
 		//game
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -88,7 +104,7 @@ public class GUI extends Canvas
 		frame.setVisible(false);
 
 		for(int i = 0; i < length * length; i++)
-			snake[i] = new rect();
+			snake[i] = new Rectangle();
 
 		snake[0].rectangle = head;
 		snake[0].onScreen = true;
@@ -101,91 +117,60 @@ public class GUI extends Canvas
 			}
 			catch(NullPointerException | NumberFormatException e) {
 				prevHigh = 0;
-			}	
-				
-//			int chars = 0, length = 0;
-//			String nums = "1234567890";
-//			int i;
-//			for(i = 0; nums.contains(l.charAt(i)+""); i++)
-//			{
-//				if(chars == 0)
-//				{
-//					chars += Integer.parseInt(l.charAt(i)+"");
-//				}
-//				else
-//				{
-//					chars *= 10;
-//					chars += Integer.parseInt(l.charAt(i)+"");
-//				}
-//			}
-//			
-//			for(i = i+1; nums.contains(l.charAt(i)+""); i++)
-//			{
-//				if(length == 0)
-//				{
-//					length += Integer.parseInt(l.charAt(i)+"");
-//				}
-//				else
-//				{
-//					length *= 10;
-//					length += Integer.parseInt(l.charAt(i)+"");
-//				}
-//			}
-			
-				
-			
-			buttonStart.addActionListener(new ActionListener() {
-		         @Override
-		         public void actionPerformed(ActionEvent e) {
-		        	 start.setVisible(false);
-		        	 frame.setVisible(true);
-
-		     		Graphics g = canvas.getGraphics();
-		        	 
-		        	 for(int i = 3; i > 0; i--)
-		        	 {
-		        		 g.setColor(Color.white);
-		        		 g.setFont(new Font("Serif", Font.CENTER_BASELINE, 66));
-		        		 g.fillRect(0, 0, frame.getWidth(), frame.getHeight());
-		        		 g.setColor(Color.black);
-		        		 g.drawString(i+"", (length*snakeSize + 7)/2 - 15, (length*snakeSize + 50)/2);
-		        		 try {Thread.sleep(1000);} catch (InterruptedException e1) {}
-		        	 }
-		        	 g.setColor(Color.white);
-	        		 g.fillRect(0, 0, frame.getWidth(), frame.getHeight());
-	        		 g.setColor(Color.black);
-		        	 g.drawString("GO!", (length*snakeSize + 7)/2 - 60, (length*snakeSize + 50)/2);
-		        	 try {Thread.sleep(1000);} catch (InterruptedException e1) {}
-		        	 
-		        	 g.setColor(Color.white);
-	        		 g.fillRect(0, 0, frame.getWidth(), frame.getHeight());
-		        	 
-		        	 
-		        	 
-		        	t.start();
-		        	snakeMovement.start();
-		        	snakeMovement2.start();
-		        	updateHigh.start();
-				}
-		    });
-			
-			
-			buttonReset.addActionListener(new ActionListener() {
-		         @Override
-		         public void actionPerformed(ActionEvent e) {
-		        	 prevHigh = 0;
-		        	 
-		        	 labelDone.setText("High Score Reset Finished");
-		        	 
-		        	 try {
-						fw = new FileWriter(highS);
-						fw.write(("0"));
-					} catch (IOException e1) {e1.printStackTrace();} 
-		
-		    }});
+			}
 		}
+		buttonStart.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("yo");
+				start.setVisible(false);
+				frame.setVisible(true);
+
+				Graphics g = canvas.getGraphics();
+
+				for(int i = 3; i > 0; i--)
+				{
+					g.setColor(Color.white);
+					g.setFont(new Font("Serif", Font.CENTER_BASELINE, 66));
+					g.fillRect(0, 0, frame.getWidth(), frame.getHeight());
+					g.setColor(Color.black);
+					g.drawString(i+"", (length*snakeSize + 7)/2 - 15, (length*snakeSize + 50)/2);
+					try {Thread.sleep(1000);} catch (InterruptedException e1) {}
+				}
+				g.setColor(Color.white);
+				g.fillRect(0, 0, frame.getWidth(), frame.getHeight());
+				g.setColor(Color.black);
+				g.drawString("GO!", (length*snakeSize + 7)/2 - 60, (length*snakeSize + 50)/2);
+				try {Thread.sleep(1000);} catch (InterruptedException e1) {}
+
+				g.setColor(Color.white);
+				g.fillRect(0, 0, frame.getWidth(), frame.getHeight());
+
+				t.start();
+				snakeMovement.start();
+				snakeMovement2.start();
+				updateHigh.start();
+			}
+		});
+
+
+		buttonReset.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				prevHigh = 0;
+
+				labelDone.setText("High Score Reset Finished");
+
+				try {
+					fw = new FileWriter(highS);
+					fw.write(("0"));
+				} catch (IOException e1) {e1.printStackTrace();} 
+
+			}});
+
 	}
-	
+
+
 	public static Thread t = new Thread (new Runnable ()
 	{
 		@Override
@@ -220,7 +205,7 @@ public class GUI extends Canvas
 								for(int i = 0; i < currentLength; i++)
 								{
 									if(food.getX() == snake[i].rectangle.getX() && food.getY() == snake[i].rectangle.getY())
-									checks = false;	
+										checks = false;	
 								}
 							}
 							currentLength++;
@@ -239,15 +224,11 @@ public class GUI extends Canvas
 
 							snake[currentLength-1].direction = snake[currentLength-2].direction;
 							snake[currentLength-1].onScreen = true;
-
-
-
 						}
 
 						if(head.getX() < 0 || head.getY() < 0 || head.getX() >= snakeSize * length || head.getY() >= snakeSize * length)
 							gameEnd = true;
 						Thread.sleep(100);
-
 					}
 					catch (InterruptedException e)
 					{
@@ -257,55 +238,20 @@ public class GUI extends Canvas
 				}
 				g2.setColor(Color.WHITE);
 				g2.fill(readInstr);
-				
+
 				try {
-//					String alpha = "abcdefghijklmnopqrstuvwxyz1234567890/.,?><';:][|}{=-+_`~]!@#$%^&*()";
-//					int random = (int) (Math.random()*1000);
-//					int anotherRandom = (int)(Math.random()*4 + 1);
-					
 					fw = new FileWriter(highS); 
-//					fw.write(random/anotherRandom +"");
-//					fw.write("a");
 					fw.write((prevHigh+""));
-//					for(int i = 0; i < random/anotherRandom; i++)
-//					{
-//						int yetAnotherRandom = (int)(Math.random()*2);
-//						int x = (int)(Math.random()*alpha.length());
-//						if(yetAnotherRandom == 0)
-//						{
-//							fw.write(alpha.substring(x, x+1).toUpperCase());
-//						}
-//						else
-//						{
-//							fw.write(alpha.substring(x, x+1));
-//						}
-//					}
-					
-//					fw.write(prevHigh + "");
-					
-//					for(int i = 0; i < random-random/anotherRandom; i++)
-//					{
-//						int yetAnotherRandom = (int)(Math.random()*2);
-//						int x = (int)(Math.random()*alpha.length());
-//						if(yetAnotherRandom == 0)
-//						{
-//							fw.write(alpha.substring(x, x+1).toUpperCase());
-//						}
-//						else
-//						{
-//							fw.write(alpha.substring(x, x+1));
-//						}
-//					}
 					fw.close();
 					fw = null;
 				} catch (IOException e1) {}
-				
+
 				if (score > prevHigh)
 				{
 					prevHigh = score;
 					newHigh = true;
 				}
-				
+
 				g2.setColor(Color.BLACK);
 				if(!newHigh)
 					g2.drawString("GAME OVER", length * snakeSize / 2 - 40, length*snakeSize/2);
@@ -315,7 +261,7 @@ public class GUI extends Canvas
 				}
 				g2.drawString("Click ESC to quit...", length * snakeSize / 2 - 53, length*snakeSize/2 + 20);
 				g2.drawString("Press any other key to play again...", length * snakeSize / 2 - 92, length*snakeSize/2 + 40);
-				
+
 				try {
 					Thread.sleep(100);
 				} catch (InterruptedException e) {}
@@ -323,8 +269,8 @@ public class GUI extends Canvas
 
 		}
 	});
-	
-	
+
+
 	public static Thread updateHigh = new Thread (new Runnable()
 	{
 		public void run ()
@@ -342,9 +288,9 @@ public class GUI extends Canvas
 			}
 		}
 	});
-	
-	
-	
+
+
+
 	public static Thread snakeMovement = new Thread (new Runnable ()
 	{
 		@Override
@@ -377,7 +323,6 @@ public class GUI extends Canvas
 		}
 	});
 
-	
 
 	public static Thread snakeMovement2 = new Thread (new Runnable ()
 	{
@@ -413,18 +358,18 @@ public class GUI extends Canvas
 					try {
 						Thread.sleep(100);
 					} catch (InterruptedException e) {
-						
+
 					}
 				}
 				try {
 					Thread.sleep(100);
 				} catch (InterruptedException e) {
-					
+
 				}
 			}
 		}
 	});
-	
+
 
 	public GUI()
 	{
@@ -462,7 +407,7 @@ public class GUI extends Canvas
 			g2.drawLine(snakeSize * i, 0, snakeSize * i, length*snakeSize);
 			g2.drawLine(0, snakeSize * i, length*snakeSize, snakeSize * i);
 		}
-		
+
 		for(int i = 1; snake[i].onScreen; i++)
 		{
 			if(!snake[i].onScreen)
@@ -472,16 +417,16 @@ public class GUI extends Canvas
 			if(head.getX() == snake[i].rectangle.getX() && head.getY() == snake[i].rectangle.getY())
 				gameEnd = true;
 		}
-		
-		
+
+
 
 		g2.drawString("Current Score: " + score + "", length * snakeSize / 9, length*snakeSize + 15);
 		g2.drawString("High Score: " + prevHigh + "", length * snakeSize /3 * 2, length*snakeSize + 15);
-	
+
 	}
 
 
-	
+
 	public static void arrowKey(String string, Graphics g, int x) throws FileNotFoundException, IOException
 	{
 		Graphics2D g2 = (Graphics2D) g;
@@ -540,7 +485,7 @@ public class GUI extends Canvas
 		}
 		canvas.repaint();
 	}
-	
+
 	public class keyHandler implements KeyListener  
 	{
 		@Override
