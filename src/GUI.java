@@ -17,7 +17,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-//Eclipse Test
 import java.util.Random;
 
 import javax.swing.JButton;
